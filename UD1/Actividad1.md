@@ -8,7 +8,7 @@ Falta de SAI | Diseño | Picos de tensión, corte de luz, entre otros | Física 
 Los clientes tienen acceso a cualquier carpeta dentro de la red | D, I y U | Personas | Lógica | C e I | 
 Todos los ordenadores están conectados a la misma regleta | Uso | Corte de luz o accidente | Física | D |
 No tienen rejas en las ventanas que dan a la calle | Uso | Personas | Física | C | 
-No tienen BackUps | Diseño e Implementación | Que por X motivo pierdan los documentos | Lógica | I y D |
+No tienen BackUps | Diseño e Implementación | Pérdida de los documentos  | Lógica | I y D |
 Tienen todos los portátiles sin ningún tipo de cable de seguridad | Uso | Personas | Física | C y D |
 Solo tienen una Red | Diseño e Implementcación | Personas | Lógica | C |
 No tienen alarma / Seguridad | Uso | Personas | Física | C, I y D |
