@@ -40,16 +40,27 @@ Vuelvo a comprobar que la IP se ha cambiado correctamente: $ ip a
 
 **Severidad alta (7-8.9)**: Hay 3 vulnerabilidades las cuales todas son de 7.5 y son: RPC, Service Detecion (Detección de servicios) y General.
 
-**Severidad media (4-6.9)**: Hay 4 vulnerabilidades, 2 de ellas con 6.5 y son: Service Detection y Misc. 
+**Severidad media (4-6.9)**: Hay 8 vulnerabilidades, 2 de ellas con 6.5 y son: Service Detection y Misc. 
 
 **Severidad baja (0.1-3.9)**: Hay 2, la mas alta con un 2.6 y es Service Detection.
 
-**Iformativa (0)**: 
-
-Hay 7 de tipo mixed.
+**Iformativa (0)**: Hay 47 de tipo informativo.
 
 ## 7- Clasificar tres vulnerabilidades
 
 | Vulnerabilidad | Severidad/CVSS | Origen (diseño, implementación, uso) | Breve descripción|
 -----------------|----------------|--------------------------------------|------------------|
+| VNC Server 'password' password | Crítica / 10 | Uso | La persona que configuró el servidor VNC puso una contraseña débil, lo que hace que cualquier persona pueda acceder a el servidor de forma remota además que es cualquier persona sin demasiado conocimiento puede acceder a ella |
+| rlogin Service Detection | Alta / 7.5 | Diseño | Los datos que se transmiten ente cliente y servidor pueden ser interceptados por un tercero (man-in-the-middle), ya que los datos se transmiten en texto plano. El servidor tiene una mala configuración en la autenticación es posible conseguir la numeración TCP o la suplantación de IP e incluso poder eludir la autenticación |
+| TLS Version 1.0 Protocol Detection | Media / 6.5 | Diseño | El servicio remoto tiene una  serie de fallos de diseño criptográfico |
 
+## 8- De las tres anteriores (o de otra que te llame la atención), elige una crítica o alta y documenta con más detalle:
+**VNC Server 'password' password (10)**
+
+**Qué es:** Servidor VNC con una contraseña débil (fácil de adivinar).
+
+**Cómo se explota:** Cualquier persona que tenga el mínimo conocimiento puede acceder de forma remota y al tener una contraseña débil la adivinarían enseguida (admin, 1234, etc).
+
+**Cómo se mitiga:** Poniendo al servidor VNC una contraseña robusta.
+
+**Referencia:** ID 61708
