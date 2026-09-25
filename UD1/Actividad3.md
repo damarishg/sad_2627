@@ -52,7 +52,7 @@ Vuelvo a comprobar que la IP se ha cambiado correctamente: $ ip a
 -----------------|----------------|--------------------------------------|------------------|
 | VNC Server 'password' password | Crítica / 10 | Uso / Implementación | La persona que configuró el servidor VNC puso una contraseña débil, lo que hace que cualquier persona pueda acceder a el servidor de forma remota además que es cualquier persona sin demasiado conocimiento puede acceder a ella |
 | rlogin Service Detection | Alta / 7.5 | Diseño | Los datos que se transmiten ente cliente y servidor pueden ser interceptados por un tercero (man-in-the-middle), ya que los datos se transmiten en texto plano. El servidor tiene una mala configuración en la autenticación es posible conseguir la numeración TCP o la suplantación de IP e incluso poder eludir la autenticación |
-| TLS Version 1.0 Protocol Detection | Media / 6.5 | Diseño | El servicio remoto tiene una  serie de fallos de diseño criptográfico |
+| TLS Version 1.0 Protocol Detection | Medio / 6.5 | Diseño | El servicio remoto tiene una  serie de fallos de diseño criptográfico |
 
 ## 8- De las tres anteriores (o de otra que te llame la atención), elige una crítica o alta y documenta con más detalle:
 **VNC Server 'password' password (10)**
