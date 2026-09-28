@@ -1,3 +1,37 @@
+## 1. SMTP spoofing
+
+### Qué es
+Es un ataque de suplantación de identidad por correo, el atacante se hace pasar por un correo que no es el suyo
+
+### Cómo se lleva a cabo
+
+### Qué categoría(s) de amenaza compromete
+Autenticidad
+
+### Ejemplo o caso real
+
+
+### Medida de prevención
+
+### Fuente
+
+
+
+
+## 2. DNS spoofing
+
+### Qué es
+
+### Cómo se lleva a cabo
+
+### Qué categoría(s) de amenaza compromete
+
+### Ejemplo o caso real
+
+### Medida de prevención
+
+### Fuente
+
 ## 3. IP spoofing
 
 ### Qué es
@@ -29,3 +63,17 @@ Se puede prevenir este ataque de varias formas, entre ellos:
 
 ### Fuente
 https://www.keyfactor.com/es/blog/what-it-is-ip-spoofing-how-to-protect-against-it/
+
+## 4. Captura de cuentas de usuario y contraseñas
+
+### Qué es
+
+### Cómo se lleva a cabo
+
+### Qué categoría(s) de amenaza compromete
+
+### Ejemplo o caso real
+
+### Medida de prevención
+
+### Fuente
