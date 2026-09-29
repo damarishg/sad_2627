@@ -6,7 +6,7 @@ Es una técnica empleada en los ataques de spam y de phising para hacerle pensar
 ### Cómo se lleva a cabo
 Se lleva a cabo manipulando las cabeceras del correo electrónico, específicamente el campo From y el Replay-To, aprovechando que el protocolo SMPT original no incluye mecanismos de autenticación integrados.
 ### Qué categoría(s) de amenaza compromete
-Autenticidad
+Principalmente amenaza a la Autenticidad, que también puede derivar a la integridad de forma indirecta.
 
 ### Ejemplo o caso real
 
@@ -27,13 +27,13 @@ Es un ciberataque donde se alteran los registros de un servidor o caché de un D
 Se lleva a cabo alternando los registros del sistema de nombres de dominio para engañar al dispositivo de un usuario y redirigirlo a una dirección IO fraudulenta.
 
 ### Qué categoría(s) de amenaza compromete
-Principalmente compromete la Integridad1, y como consecuencia directa la Confidencialidad e incluso la disponiblidad.
+Principalmente compromete la Integridad, y como consecuencia directa la Confidencialidad e incluso la disponiblidad.
 
 ### Ejemplo o caso real
 Google confirmó que su servicio Public DNS fue interceptado por proveedores turcos y que las consultas DNS se redirigían hacia servidores propios, aunque los usuarios intentaran usar DNS externos. El casi mostró que una manipulación de los DNS puede afectar a miles de usuarios y dificultar el acceso legítimo a servicios online.
 
 ### Medida de prevención
-
+DNSSEC (Domain Name System Security Extensions), usar configuraciones seguras en los servidores DNS y la vigilancia continua de la actividad de la red.
 
 ### Fuente
 
