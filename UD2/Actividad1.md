@@ -5,18 +5,17 @@ Es una técnica empleada en los ataques de spam y de phising para hacerle pensar
 
 ### Cómo se lleva a cabo
 Se lleva a cabo manipulando las cabeceras del correo electrónico, específicamente el campo From y el Replay-To, aprovechando que el protocolo SMPT original no incluye mecanismos de autenticación integrados.
+
 ### Qué categoría(s) de amenaza compromete
-Principalmente amenaza a la Autenticidad, que también puede derivar a la integridad de forma indirecta.
+Autenticidad al modificar el remitente. Integridad y disponibilidad en cascada.
 
 ### Ejemplo o caso real
-
+Detenido un hombre de 52 años al que se le imputa un presunto delito de estafa agravada mediante la técnica de "email spoofing". Una práctica con la que consiguió una relación comercial entre dos mercantiles para emitir facturas falsas superiores a 140.000 euros.
 
 ### Medida de prevención
+Implementar protocolos de autenticación de dominios SPF, DKIM y DMARC en los servidores de correo.
 
 ### Fuente
-
-
-
 
 ## 2. DNS spoofing
 
@@ -72,14 +71,18 @@ https://www.keyfactor.com/es/blog/what-it-is-ip-spoofing-how-to-protect-against-
 ## 4. Captura de cuentas de usuario y contraseñas
 
 ### Qué es
-
+Vulnerabilidad activa que te coge las credenciales aprovechando fallos de seguridad como contraseñas escritas.
 
 ### Cómo se lleva a cabo
+Con herramientas de tráfico de red que capturan que pasa. Técnicas como el Phishing. Te quitan información sin que lo sepas. Búsquedas en BBDD y diccionarios también.
 
 ### Qué categoría(s) de amenaza compromete
+Intercepción. Se capturan mientras datos que están enviándose entre el punto A y el punto B. Suplantación de Identidad, también Confidencialidad. También la Integridad y Disponibilidad dependiendo de lo que se haga con el acceso.
 
 ### Ejemplo o caso real
+Pasó en Octubre de 2025, mayor exposición e datos de la historia. 30 conjuntos de datos 16 millones de datos. Muchas empresas como Netflix y PayPal fueron afectadas.
 
 ### Medida de prevención
+Una medida de prevención es la doble autenticación.
 
 ### Fuente
