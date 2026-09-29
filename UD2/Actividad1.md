@@ -1,10 +1,10 @@
 ## 1. SMTP spoofing
 
 ### Qué es
-Es un ataque de suplantación de identidad por correo, el atacante se hace pasar por un correo que no es el suyo
+Es una técnica empleada en los ataques de spam y de phising para hacerle pensar a un usuario que un mensaje proviene de una persona o entidad que conocen o en la que confían.
 
 ### Cómo se lleva a cabo
-
+Se lleva a cabo manipulando las cabeceras del correo electrónico, específicamente el campo From y el Replay-To, aprovechando que el protocolo SMPT original no incluye mecanismos de autenticación integrados.
 ### Qué categoría(s) de amenaza compromete
 Autenticidad
 
@@ -21,14 +21,19 @@ Autenticidad
 ## 2. DNS spoofing
 
 ### Qué es
+Es un ciberataque donde se alteran los registros de un servidor o caché de un DNS para redirigir el tráfico de un usuario hacia una página web falsa o maliciosa. 
 
 ### Cómo se lleva a cabo
+Se lleva a cabo alternando los registros del sistema de nombres de dominio para engañar al dispositivo de un usuario y redirigirlo a una dirección IO fraudulenta.
 
 ### Qué categoría(s) de amenaza compromete
+Principalmente compromete la Integridad1, y como consecuencia directa la Confidencialidad e incluso la disponiblidad.
 
 ### Ejemplo o caso real
+Google confirmó que su servicio Public DNS fue interceptado por proveedores turcos y que las consultas DNS se redirigían hacia servidores propios, aunque los usuarios intentaran usar DNS externos. El casi mostró que una manipulación de los DNS puede afectar a miles de usuarios y dificultar el acceso legítimo a servicios online.
 
 ### Medida de prevención
+
 
 ### Fuente
 
@@ -39,8 +44,8 @@ Es una técnica que consiste en falsificar la dirección IP de origen en los paq
 
 ### Cómo se lleva a cabo
 1. Todo paquete de red tiene una cabecera con la IP de origen y la de destino.
-2. El ataque modifica el campo de origen y pone otra IP (la de otro equipo, una inventada o la d la propia víctima).
-3. El destino recibe el paquete y cree que viene de esa IP falsa.
+2. El ataque modifica el campo de origen y pone otra IP (la de otro equipo, una inventada o la de la propia víctima).
+3. El destino recibe el paquete y cree que viene de esa IP verdadera/falsa.
 4. Las respuestas se envían a la IP falsificada, no al atacante. Por eso, el spoofing suele usarse cuando el atacante no necesita recibir la respueta.
 
 ### Qué categoría(s) de amenaza compromete
@@ -57,7 +62,7 @@ Se puede prevenir este ataque de varias formas, entre ellos:
 
 **Autenticación mediante infraestructura de clave pública:** Usa un cifrado asimétrico, una clave privada para cifrar y autenticar, y una pública para descifrar. Impide que terceros deduzcan la clave privada, lo que permite verificar con seguridad a usuarios y dispositivos frente a ataques de suplatación.
 
-**Supervisión de redes y Firewalls:** Detecta de forma temprana actividades sospechosas para mitigar daños, aunque la suplantación de IP intente ocultarlas. El firewall autentica direcciones IP y filtra el tráfico potencialmente malicioso para evitar accesos no autorizados.
+**Supervisión de redes y Firewalls:** Detecta de forma temprana actividades sospechosas para mitigar daños, aunque la suplantación de IP intente ocultarlas. El firewall autentica direcciones IP y filtra el tráfico potencialmente malicioso para evitar accesos no autorizados (IDS).
 
 **Formación en materia de seguridad:** Enseñar a los usuarios a evitar trampas como enlaces sospechosos para mitigar los datos de la suplantación de IP.
 
@@ -67,6 +72,7 @@ https://www.keyfactor.com/es/blog/what-it-is-ip-spoofing-how-to-protect-against-
 ## 4. Captura de cuentas de usuario y contraseñas
 
 ### Qué es
+
 
 ### Cómo se lleva a cabo
 
