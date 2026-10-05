@@ -17,10 +17,17 @@ Para apagar la máquina se una el comando $ sudo shutdown -h now
 
 ## B3. Contramedidas (en Torrent-Vulnerable, con sudo
 
+1- Hacer un nmap (ver que puertos están abiertos) desde la máquina linux con el comando $ nmap -sV 192.168.1.101 -oN antes.txt
 
+2- Hacer un $ sudo netstat -tulpn en metasploitable para ver todos los servicios que tengan el puerto abierto
 
+3- 
 
+<img width="942" height="47" alt="image" src="https://github.com/user-attachments/assets/ddc9fcc3-9007-41a3-8536-cafe0d460836" />
 
+Para parar el servicio he hecho: 
+
+<img width="977" height="372" alt="image" src="https://github.com/user-attachments/assets/41e72f71-407d-4dfc-b868-c8cf5bc8cfba" />
 
 
 
