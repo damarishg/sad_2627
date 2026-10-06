@@ -17,17 +17,44 @@ Para apagar la máquina se una el comando $ sudo shutdown -h now
 
 ## B3. Contramedidas (en Torrent-Vulnerable, con sudo
 
-1- Hacer un nmap (ver que puertos están abiertos) desde la máquina linux con el comando $ nmap -sV 192.168.1.101 -oN antes.txt
+### XINETD
+**1-** Hacer un nmap (ver que puertos están abiertos) desde la máquina linux con el comando $ nmap -sV 192.168.1.101 -oN antes.txt
 
-2- Hacer un $ sudo netstat -tulpn en metasploitable para ver todos los servicios que tengan el puerto abierto
 
-3- 
+**2-** Hacer un $ sudo netstat -tulpn en metasploitable para ver todos los servicios que tengan el puerto abierto
 
-<img width="942" height="47" alt="image" src="https://github.com/user-attachments/assets/ddc9fcc3-9007-41a3-8536-cafe0d460836" />
 
-Para parar el servicio he hecho: 
+**3-** Escoger un servicio, en mi caso el del puerto 513 y mirar dentro de /etc/services con el comando $ grep  513 /etc/services
 
-<img width="977" height="372" alt="image" src="https://github.com/user-attachments/assets/41e72f71-407d-4dfc-b868-c8cf5bc8cfba" />
+<img width="510" height="92" alt="image" src="https://github.com/user-attachments/assets/a4039ecb-1345-4476-9c9f-bb20a54075eb" />
+
+
+**4-**  Ahora al encontrar el nombre del proceso tengo que buscar dentro de /etc/inetd.d y dentro de /etc/xinetd.d con el comando $ sudo grep -n -w login /etc/
+
+<img width="863" height="66" alt="image" src="https://github.com/user-attachments/assets/515af8cd-58fa-4587-b2f7-2034abeab2f6" />
+
+
+**5-** Modificar el archivo /etc/inetd.conf poniendo una # delante para que no arranque el servicio
+
+<img width="315" height="40" alt="image" src="https://github.com/user-attachments/assets/07b924d1-3588-4032-af62-27e24d124d00" />
+
+
+**6-** Recargar el archivo modificado anteriormente con el comando $ sudo /etc/init.d/xineted reload   (siempre poner el mismo path si se modifica inet.d o xinetd)
+
+<img width="605" height="42" alt="image" src="https://github.com/user-attachments/assets/ef371fcd-9f84-4acb-baa3-73bd0be4bf63" />
+
+
+
+**7-** Comprobar que el puerto se ha cerrado con el comando $ sudo netstat -tulpn | grep 513 
+
+<img width="970" height="140" alt="image" src="https://github.com/user-attachments/assets/14e4ddd2-ee99-4cf4-8bab-304ef674cf6c" />
+
+
+--------------------------------------------------------------------------------------------------
+**1-** Averiguar el nombre del servicio 2049 con el comando $grep 2049 /etc/services 
+
+<img width="737" height="101" alt="image" src="https://github.com/user-attachments/assets/2c49ad88-5162-4ec6-9923-f916af93c96e" />
+
 
 
 
