@@ -56,6 +56,28 @@ Para apagar la máquina se una el comando $ sudo shutdown -h now
 <img width="737" height="101" alt="image" src="https://github.com/user-attachments/assets/2c49ad88-5162-4ec6-9923-f916af93c96e" />
 
 
+**2-** Averiguar donde se encuentra el servicio. Se puede averiguar de diferentes maneras: listando, haciendo cat, etc: Hay que ir probando hasta encontrar donde se encuentra. Hay que buscar en init.d, xineted.d, inetd.conf, xineted.conf, rc2.d. En rc2.d he encontrado 2 servicios con nfs.
+
+<img width="870" height="165" alt="image" src="https://github.com/user-attachments/assets/26748b24-755b-4ff6-840e-ebd41f978ead" />
+
+<img width="562" height="75" alt="image" src="https://github.com/user-attachments/assets/2e318b7b-1bad-4100-89f0-1ee31bcdd7dc" />
+
+
+<img width="942" height="86" alt="image" src="https://github.com/user-attachments/assets/0df25fc3-5b24-4833-88b8-77b17408e729" />
+
+**3-** 
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## B4. Medición DESPUÉS
