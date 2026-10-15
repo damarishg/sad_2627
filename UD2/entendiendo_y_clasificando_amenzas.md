@@ -21,12 +21,12 @@
 | Parásito Informático | Malware que necesita acoplarse e infectar archivos ejecutables o sectores de arranque ya existentes en el equipo anfitrión para funcionar y propagarse |
 | Pharming | Manipulación del tráfico de Internet para redirigirte a un sitio web falso | 
 | Phising | Correos maliciosos | 
-| Rabbit o Conejos | 
-| Riskware | 
-| Rootkit | 
-| Scumware o Escoria | 
-| Spam | 
-| Spyware | 
-| Pop_Ups o Ventanas emergentes | 
-| Worms o Gusanos | 
+| Rabbit o Conejos | Malware diseñado para reproducirse sin control de forma local, multipolicando sus propios archivos o procesos en un PC hasta colapsar el sistema |
+| Riskware | Programas legítimos que no han sido creados para ser maliciosos, pero que contienen funciones que un atacante puede aprovechar para violar la seguridad de tu sistema |
+| Rootkit | Conjunto de programas de herramientas de SW diseñadas para ocultar la presencia de programas maliciosos y mantener un acceso privilegiado y oculto en un SOp |
+| Scumware o Escoria | Modifica o altera las páginas web que visitas en tiempo real |
+| Spam | Envío masico, no solicitado y repetitivo de mensajes |
+| Spyware | Recopila información sobre ti o tu dispositivo de manera secreta y la envia a terceros sin tu conocimiento ni consentimiento |
+| Pop_Ups o Ventanas emergentes | Ventana que se abre de forma automática e imprevista en la pantalla de tu navegador o SOp |
+| Worms o Gusanos | Se duplica a sí mismo y se propaga automáticamente e un PC a otro a través de la red |
 
