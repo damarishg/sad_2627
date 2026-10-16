@@ -109,16 +109,21 @@ En rc2.d he encontrado 2 servicios con nfs. Para encontrar la ruta se usa el com
 <img width="658" height="107" alt="image" src="https://github.com/user-attachments/assets/f91c9499-ab1d-40d0-9c52-cfaf002abd14" />
 
 ----------------------------------------------------------------------------------------------------
+### Servicio con nombre jsvc
 
+**1-** Encontrar el servicio. He hecho todo lo de las capturas y no he encontrado nada al respecto sobre ese servicio
 
+<img width="913" height="68" alt="image" src="https://github.com/user-attachments/assets/a6f3274f-eb23-4a0f-84a6-6c3b4304bee9" />
 
+**2-** Para poder encontrarlo he tenido que hacer 📌`$ sudo grep -r jsvc /etc/` . Jsvc no es el nombre del servicio, realmente se llama tomcat5.5 y está dentro de rc2.d
 
+<img width="702" height="253" alt="image" src="https://github.com/user-attachments/assets/922c27ce-78c1-4bdb-8b5c-7a5e6467713d" />
 
+**3-** Hago un ls dentro de rc2.d para encontrar el servicio
 
+<img width="836" height="76" alt="image" src="https://github.com/user-attachments/assets/b29460eb-5bee-4475-aa6c-76c1423aef85" />
 
-
-
-
+**4-** Como es un ejecutable tengo que detener el proceso con el comando 📌
 
 ## B4. Medición DESPUÉS
 
