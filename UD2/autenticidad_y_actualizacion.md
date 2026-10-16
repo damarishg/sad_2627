@@ -6,15 +6,26 @@
 <img width="481" height="57" alt="image" src="https://github.com/user-attachments/assets/0e6e1a34-82cb-4c8a-a71d-91cac664ed20" />
 
 **1- Types:** Indica el tipo de repositorio. DEB significa que descargará paquetes precompilados e instalables.
+
 **2- URIs :** Es la dirección web  (servidor espejo) desde donde se descargan los programas.
+
 **3- Suites:** Es la versión específica de Ubuntu y las ramas de paquetes que va a buscar. NOBLE: Es el nombre en clave de la versión de la versión de Ubuntu.
+
 NOBLE-UPDTES: Actualizaciones y correcciones que se lanzan tras la salida del sistema. 
+
+
 NOBLE-BACKPORTS: Versiones más recientes de ciertos programas adaptadas para esta versión.
+
 NOBLE-SECURITY: Parches de seguridad de seguridad específicos.
+
 **4- Components:** Categorías o secciones de SW que tienes activas según sus licencias y soporte. MAIN: SW libre y de Código Abierto respaldado con soporte oficial de Canonical.
+
 RESTRICTED: Controladores propietarios del sistema.
+
 UNIVERSE: Programas libres mantenidos por la comunidad de Linux.
+
 MULTIVERSE: Programas no libres y restringidos por patentes o derechos de autor.
+
 **5- Signed-By:** Clave digital de Seguridad (clave pública de Ubuntu).
 
 ### B2. apt solo instala paquetes firmados por claves en las que confía. Mirad dónde están esas claves
