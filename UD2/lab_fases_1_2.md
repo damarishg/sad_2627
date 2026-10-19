@@ -16,6 +16,10 @@ Para apagar la máquina se una el comando $ sudo shutdown -h now
 
 
 ## B3. Contramedidas (en Torrent-Vulnerable, con sudo
+
+### COMANDO FIND
+También se puede encontrar un servicio con el siguiente comando 📌`$ sudo find / -name "*nombre_servicio*" 2>/dev/null`
+
 ### :pushpin: ¿Cuándo usar 'ls' o 'grep'?
 Depende de si vas a consultar una **carpeta** o un **archivo de texto** (configuración).
 1. Usar 'ls' cuando buscas dentro de una **carpeta** donde cada servicio es un archivo independiente
@@ -123,7 +127,18 @@ En rc2.d he encontrado 2 servicios con nfs. Para encontrar la ruta se usa el com
 
 <img width="836" height="76" alt="image" src="https://github.com/user-attachments/assets/b29460eb-5bee-4475-aa6c-76c1423aef85" />
 
-**4-** Como es un ejecutable tengo que detener el proceso con el comando 📌
+**4-** Como es un ejecutable tengo que detener el proceso con el comando 📌 $ sudo /etc/init.d/tomcat5.5 stop
+
+<img width="631" height="46" alt="image" src="https://github.com/user-attachments/assets/73c9f841-bad2-4bdc-8cf3-91399a9ad549" />
+
+**5-** Una vez detenido lo elimino de las carpetas rc para que no se ejecute al arrancar con el comando 📌 $ sudo 
+
+<img width="687" height="50" alt="image" src="https://github.com/user-attachments/assets/e4194c71-9478-4788-bd86-def4a1357f8f" />
+
+**6-** Comprobar que el servicio se ha parado y reiniciar la máquina:
+
+<img width="616" height="57" alt="image" src="https://github.com/user-attachments/assets/6316485c-5cad-4d3d-b9de-4af351c89de4" />
+
 
 ## B4. Medición DESPUÉS
 
