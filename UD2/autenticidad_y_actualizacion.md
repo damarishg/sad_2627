@@ -1,6 +1,12 @@
 ## Parte B · ¿De dónde vienen los programas instalados?
 ### B1. Mirad de qué repositorios se descarga vuestro sistema:
 
+cat /etc/apt/sources.list
+
+ls /etc/apt/sources.list.d/
+
+Investiga el fichero donde están configurados los repositorios y comenta el significado de cada una de las líneas y su contenido.
+
 <img width="655" height="270" alt="image" src="https://github.com/user-attachments/assets/d73a6fb5-1dd0-4b03-9830-9c7a3a97b759" />
 
 <img width="481" height="57" alt="image" src="https://github.com/user-attachments/assets/0e6e1a34-82cb-4c8a-a71d-91cac664ed20" />
@@ -41,9 +47,81 @@ En el caso de que intercepte la clave oficial sería peor, ya que no hace falta 
 ### B3. Información de un paquete concreto. Elegid openssh-server o curl:
 
 <img width="816" height="277" alt="image" src="https://github.com/user-attachments/assets/c96321cf-8550-4299-841f-f3122b9832bb" />
+
 Anotad: versión instalada, versión candidata, repositorio de origen y el significado de la tabla de versiones.
+
 **Versión instalda:** 1:9.6p1-3ubuntu13.19
+
 **Versión candidata:** 1:9.6p1-3ubuntu13.19
-**Repositorio de origen:**
-**Significado de la tabla:**
+
+**Repositorio de origen:** 
+
+<img width="556" height="52" alt="image" src="https://github.com/user-attachments/assets/c1df3565-58c0-4d92-bc23-6225777f8a08" />
+
+
+**Significado de la tabla:**  Los * indica la versión instalada actualmente en el sistema. Los números indican una prioridad, a mayor número mayor prioriad (500, 100). Primero mira en el nº 500 en el caso de que falle mira en el nº 100. 
+
+/var/lib/dpkg/status: Es la BBDD local del sistema que confirma que el paquete ya se encuentra instalado físicamente.
+
+
+### B4. Buscad paquetes instalados que no proceden de ningún repositorio (instalados a mano):
+
+<img width="896" height="187" alt="image" src="https://github.com/user-attachments/assets/b28f8d7a-2c53-42ce-ac08-d2019a3ca847" />
+
+Cada línea que salga merece una pregunta: ¿quién lo instaló, de dónde, y quién lo verificó?
+
+**📌 Nessus**
+
+Es el único que está marcado como [installed. local]
+
+**¿Quién lo instaló?:** El administrador del sistema de forma manual.
+
+**¿De dónde?:** Desde un archivo instalador local (.deb) descargado externamente (desde Internet) y no desde los repositorios oficiales de Ubuntu.
+
+**¿Quién lo verificó?:** El propio administrador al descargarlo del fabricante. Al no ser un paquete de repositorio, el SOp no pudo  verificarlo de forma automática mediante las claves de confianza de Ubuntu.
+
+**📌 Resto de paquetes**
+
+**¿Quién lo instaló?:** El gestor de paquetes del sistema (apt) de forma automática al resolver dependencias requeridas por otras aplicaciones.
+
+**¿De dónde?:** Proceden directamente de los repositorios oficiales de Ubuntu ( como noble, noble-updates o noble-security).
+
+**¿Quién lo verificó?:** El SOp Ubuntu mediante verificación automática de firmas digitales y claves de autenticidad del repositorio oficial.
+
+### B5. Comprobad si algún fichero de un paquete ha cambiado desde que se instaló:
+
+sudo dpkg -V
+
+Si no sale nada, todo coincide con lo instalado.
+
+Si salen líneas, la primera columna indica qué cambió (5 = el hash MD5 es distinto). Los ficheros de configuración (c) cambian de forma normal. Un binario (/usr/bin/...) modificado es una alarma
+
+<img width="725" height="208" alt="image" src="https://github.com/user-attachments/assets/a7adb524-ce9d-487d-89bf-52f444a3aa0d" />
+
+Pregunta B: dpkg -V ¿detectaría un rootkit que además hubiera modificado la base de datos de dpkg? ¿Por qué conviene comparar con una copia guardada fuera del sistema? (Pista: recordad la fase 4 de la intrusión.)
+
+La cuarta fase es la de borrar huellas, en este caso al modificar también la BBD de dpkg no ve ninguna modificación, por ende el rootkit no sería detectado. Conviene tener una copia fuera porque en el caso de duda de modificación la copia externa es de confianza e inalterable por el atacante y se pueden compara abos archivos.
+
+
+## Parte C · Verificar una descarga: hash y firma
+
+Descargaremos un programa pequeño y real, GNU Hello, junto a su firma y la lista de claves de GNU.
+
+### C1. Descarga:
+
+mkdir -p ~/verif && cd ~/verif
+
+wget https://ftp.gnu.org/gnu/hello/hello-2.12.1.tar.gz
+
+wget https://ftp.gnu.org/gnu/hello/hello-2.12.1.tar.gz.sig
+
+wget https://ftp.gnu.org/gnu/gnu-keyring.gpg
+
+
+### C2. Calculad el hash:
+
+sha256sum hello-2.12.1.tar.gz
+
+
+
 
