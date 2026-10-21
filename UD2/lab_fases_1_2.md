@@ -114,7 +114,7 @@ Si el servicio no aparece en `/etc/initd.d/`, `inetd.conf`, `/etc/xinetd.d/`, `x
 <img width="970" height="140" alt="image" src="https://github.com/user-attachments/assets/14e4ddd2-ee99-4cf4-8bab-304ef674cf6c" />
 
 
---------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
 ### SERVICIO EJECUTADO POR - (SCRIPT)
 
 **1-** Averiguar el nombre del servicio 2049 con el comando 
@@ -192,7 +192,27 @@ En rc2.d he encontrado 2 servicios con nfs. Para encontrar la ruta se usa el com
 
 <img width="616" height="57" alt="image" src="https://github.com/user-attachments/assets/6316485c-5cad-4d3d-b9de-4af351c89de4" />
 
-----------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+SERVICIO CON NOMBRE PROPIO (MYSQL) mysqld
+
+**1-** EN el netstat sale que se llama mysqld, pero al hacer `📌 $ grep 3306 /etc/service` sale el nombre real del servicio.
+
+**2-** Para encontrarlo hacemos lo siguiente:
+```
+📌 $ sudo ls -l /etc/init.d/ /etc/xinetd.d/ /etc/rc2.d/ | grep mysql
+```
+<img width="941" height="165" alt="image" src="https://github.com/user-attachments/assets/9c194ceb-2923-4bf7-9003-32978e4df746" />
+
+**3-** En la imagen anterior aparecen (hay 3 mysql) que está dentro de init.d y es un script, entonces hay que hacer lo siguiente con cada uno de ellos:
+
+1. Parar el servicio
+```
+📌 $ sudo /etc/init.d/mysql stop
+```
+
+
+
+
 
 ## B4. Medición DESPUÉS
 
@@ -202,10 +222,11 @@ En rc2.d he encontrado 2 servicios con nfs. Para encontrar la ruta se usa el com
 
 ## B5. Preguntas finales
 ### 1- ¿Qué contramedida ha reducido más lo que ve el atacante? ¿Por qué?
-
+Cerrar los puertos es lo que mas a reducido el peligro, pero al ser un SOp sin soporte sigue habiendo peligro. 
+Ha reducido lo que el atacante ve porque son puertas que cerramos y el atacante no puede usar para entrar al equipo.
 
 ### 2- Si solo ocultáis un banner pero el servicio sigue activo, ¿la vulnerabilidad sigue ahí? Razonad la respuesta
-
+Sí, porque aun que no se va sigue existiendo. Si el atacante averigua esa vulnerabilidad la puede explotar.
 
 
 ### 3- Torrent-Vulnerable usa un sistema operativo sin soporte desde hace años. ¿Puede una contramedida de estas sustituir a actualizarlo? ¿Qué haríais en una empresa real?
