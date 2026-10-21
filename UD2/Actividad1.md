@@ -1,60 +1,60 @@
 ## 1. SMTP spoofing
 
-### Qué es
+### 📖 Qué es
 Es una técnica empleada en los ataques de spam y de phising para hacerle pensar a un usuario que un mensaje proviene de una persona o entidad que conocen o en la que confían.
 
-### Cómo se lleva a cabo
+### 🚀 Cómo se lleva a cabo
 Se lleva a cabo manipulando las cabeceras del correo electrónico, específicamente el campo From y el Replay-To, aprovechando que el protocolo SMPT original no incluye mecanismos de autenticación integrados.
 
-### Qué categoría(s) de amenaza compromete
+### 📌 Qué categoría(s) de amenaza compromete
 Autenticidad al modificar el remitente. Integridad y disponibilidad en cascada.
 
-### Ejemplo o caso real
+### 💡 Ejemplo o caso real
 Detenido un hombre de 52 años al que se le imputa un presunto delito de estafa agravada mediante la técnica de "email spoofing". Una práctica con la que consiguió una relación comercial entre dos mercantiles para emitir facturas falsas superiores a 140.000 euros.
 
-### Medida de prevención
+### 🛠️ Medida de prevención
 Implementar protocolos de autenticación de dominios SPF, DKIM y DMARC en los servidores de correo.
 
-### Fuente
+### 🔗 Fuente
 
 ## 2. DNS spoofing
 
-### Qué es
+### 📖 Qué es
 Es un ciberataque donde se alteran los registros de un servidor o caché de un DNS para redirigir el tráfico de un usuario hacia una página web falsa o maliciosa. 
 
-### Cómo se lleva a cabo
+### 🚀 Cómo se lleva a cabo
 Se lleva a cabo alternando los registros del sistema de nombres de dominio para engañar al dispositivo de un usuario y redirigirlo a una dirección IO fraudulenta.
 
-### Qué categoría(s) de amenaza compromete
+### 📌 Qué categoría(s) de amenaza compromete
 Principalmente compromete la Integridad, y como consecuencia directa la Confidencialidad e incluso la disponiblidad.
 
-### Ejemplo o caso real
+### 💡 Ejemplo o caso real
 Google confirmó que su servicio Public DNS fue interceptado por proveedores turcos y que las consultas DNS se redirigían hacia servidores propios, aunque los usuarios intentaran usar DNS externos. El casi mostró que una manipulación de los DNS puede afectar a miles de usuarios y dificultar el acceso legítimo a servicios online.
 
-### Medida de prevención
+### 🛠️ Medida de prevención
 DNSSEC (Domain Name System Security Extensions), usar configuraciones seguras en los servidores DNS y la vigilancia continua de la actividad de la red.
 
 ### Fuente
 
 ## 3. IP spoofing
 
-### Qué es
+### 📖 Qué es
 Es una técnica que consiste en falsificar la dirección IP de origen en los paquetes de datos para hacer creer que provienen de una fuente confiable o de otro sistema.
 
-### Cómo se lleva a cabo
+### 🚀 Cómo se lleva a cabo
 1. Todo paquete de red tiene una cabecera con la IP de origen y la de destino.
 2. El ataque modifica el campo de origen y pone otra IP (la de otro equipo, una inventada o la de la propia víctima).
 3. El destino recibe el paquete y cree que viene de esa IP verdadera/falsa.
 4. Las respuestas se envían a la IP falsificada, no al atacante. Por eso, el spoofing suele usarse cuando el atacante no necesita recibir la respueta.
 
-### Qué categoría(s) de amenaza compromete
+### 📌 Qué categoría(s) de amenaza compromete
 Vulnera principalmente la Autenticidad, de forma derivada la Integridad y Disponibilidad
 El enfoque es engañar al receptor, suplantando la identidad de otro emisor, permitiendo inyectar código bajo el pseudónimo de otro emisor considerado seguro, destruyendo por completo la garantía del origen, ergo, rompe la Autenticidad.
 
-### Ejemplo o caso real
+### 💡 Ejemplo o caso real
 Un caso famoso de las primeras veces que se aplicó esta técnica fue el de Kevin Mitnick en 1994. Este quería acceder ilegalmente al ordenador del experto en seguridad Tsutomu Shimomura. Para realizarlo, falsificó la dirección IP de una máquina de confianza que el sistema del atacado reconociera. Dado que el ataque parecía provenir de una dirección IP conocida y confiable, el sistema objetivo no solicitó una contraseña. Kevin no podría recibir respuestas, puesto que iban dirigidas a la máquina real, pero adivinó los códigos de confirmación para completar el protocolo de enlace y tener acceso unidireccional. Esto le permitió extraer datos y acaparar titulares, demostrando los riesgos de confiar únicamente en las direcciones IP.
 
-### Medida de prevención
+### 🛠️ Medida de prevención
 Se puede prevenir este ataque de varias formas, entre ellos:
 
 **Filtrado de paquetes:** Evalúa la cabecera de cada paquete IP (analizando aspectos como la dirección de origen, destino y puertos) para determinar si permite o bloquea el tráfico entrante o saliente según las reglas establecidas. Si un paquete incumple las reglas o muestra inconsistencia en sus datos, el firewall o dispositivo de red lo descarta.
@@ -70,19 +70,19 @@ https://www.keyfactor.com/es/blog/what-it-is-ip-spoofing-how-to-protect-against-
 
 ## 4. Captura de cuentas de usuario y contraseñas
 
-### Qué es
+### 📖 Qué es
 Vulnerabilidad activa que te coge las credenciales aprovechando fallos de seguridad como contraseñas escritas.
 
-### Cómo se lleva a cabo
+### 🚀 Cómo se lleva a cabo
 Con herramientas de tráfico de red que capturan que pasa. Técnicas como el Phishing. Te quitan información sin que lo sepas. Búsquedas en BBDD y diccionarios también.
 
-### Qué categoría(s) de amenaza compromete
+### 📌 Qué categoría(s) de amenaza compromete
 Intercepción. Se capturan mientras datos que están enviándose entre el punto A y el punto B. Suplantación de Identidad, también Confidencialidad. También la Integridad y Disponibilidad dependiendo de lo que se haga con el acceso.
 
-### Ejemplo o caso real
+### 💡 Ejemplo o caso real
 Pasó en Octubre de 2025, mayor exposición e datos de la historia. 30 conjuntos de datos 16 millones de datos. Muchas empresas como Netflix y PayPal fueron afectadas.
 
-### Medida de prevención
+### 🛠️ Medida de prevención
 Una medida de prevención es la doble autenticación.
 
 ### Fuente
