@@ -50,6 +50,7 @@ Depende de si vas a consultar una **carpeta** o un **archivo de texto** (configu
 3. Si aparece al menos una x (aunque también estén rw) es un script
 
 ### 🔄 ¿Cómo recargar los cambios según el archivo modificado?
+* **HACER PRIMERO EL ÚLTIMO PUNTO**
 * **Si modifico `/etc/inetd.conf` (INETD):**
  ```
  📌 sudo /etc/init.d/openbsd-inetd restart
