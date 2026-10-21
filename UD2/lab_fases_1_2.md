@@ -23,7 +23,7 @@ También se puede encontrar un servicio con el siguiente comando 📌`$ sudo fin
 ### :pushpin: ¿Cuándo usar 'ls' o 'grep'?
 Depende de si vas a consultar una **carpeta** o un **archivo de texto** (configuración).
 1. Usar 'ls' cuando buscas dentro de una **carpeta** donde cada servicio es un archivo independiente
-2. Usar 'grep -n' cuando buscas dentro de un **archivo de conbfiguración**.
+2. Usar 'grep -n' cuando buscas dentro de un **archivo de configuración**.
 
 **Como usar 'ls' correctamente**
 :pushpin:`$ ls -l /etc/carpeta | grep nombre_servicio`
