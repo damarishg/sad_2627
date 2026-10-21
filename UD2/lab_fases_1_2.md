@@ -1,21 +1,21 @@
 Para apagar la máquina se una el comando $ sudo shutdown -h now
 
-# Parte A — Fase 1: reconocimiento
-## A1. whois y nslookup desde dos máquinas
-
-
-
 # Parte B — Fase 2: exploración y contramedidas
 ## B1. Preparación
-
+1. Arrancad Torrent-Auditor y Torrent-Vulnerable.
+2. Antes de tocar nada, haced una instantánea de Torrent-Vulnerable (en VirtualBox: menú Máquina → Tomar instantánea). Vais a modificarla y luego la necesitaremos tal como estaba.
+3. Anotad la IP de Torrent-Vulnerable (ip a dentro de ella).
+4. Desde Torrent-Auditor, comprobad que la veis: ping -c 3 <IP>.
 
 
 ## B2. Medición ANTES
 
-
+Al hacer el ejercicio 3 primero no tengo capturas del comando en el Auditor, y tampoco conté los puertos abiertos.
 
 
 ## B3. Contramedidas (en Torrent-Vulnerable, con sudo
+
+### CONTRAMEDIDA 1 
 
 ### COMANDO FIND
 También se puede encontrar un servicio con el siguiente comando 
@@ -221,16 +221,52 @@ SERVICIO CON NOMBRE PROPIO (MYSQL) mysqld
 <img width="671" height="61" alt="image" src="https://github.com/user-attachments/assets/8117df81-af98-4dd0-b8f8-94d70fa9ab5f" />
 
 
+### PUERTOS ABIERTOS EN EL SISTEMA
+No sabía si solo se cerraban las 0.0.0.0 o todas, veía raro cerrar algunos servicios como el DNS, pero como no estaba segura solo he dejado el puerto 80 (apache2), el 22 (ssh) y el UDP.
+
+<img width="960" height="203" alt="image" src="https://github.com/user-attachments/assets/006bfe1a-69a2-4c68-b6f9-f465977b8d97" />
+
+### CONTRAMEDIDA 2
+
+### 📌 BLOQUEAR EL PING
+
+* Desde la máquina Vsudosdulnerable:
+```
+📌 $ sudo iptables -A INPUT -p icmp --icmp-type echo-request -j DROP
+```
+<img width="963" height="67" alt="image" src="https://github.com/user-attachments/assets/ef403932-16d8-4fee-937a-7f62073217a8" />
+
+* Desde la máquina Auditora:
+```
+📌$ ping -c 3 192.168.1.101 
+```
+
+<img width="688" height="142" alt="image" src="https://github.com/user-attachments/assets/569e63ae-abbf-4e0f-80c2-3ae6ca1d79be" />
+
+Al bloquearse las solicitudes de echo-request los paquetes enviados por el Auditor se han perdido.
+
 ## B4. Medición DESPUÉS
 
+En Torrent-Auditor:
+```
+📌 $ sudo nmap -sV <IP> -oN despues.txt
+📌 $ diff antes.txt despues.txt
+```
+<img width="672" height="73" alt="image" src="https://github.com/user-attachments/assets/a30b5e67-78b6-40ac-8a42-324d11e62351" />
 
 
+Rellenad la tabla:
 
+| Aspecto | Antes | Contramedida aplicada | Después |
+|---------|-------|-----------------------|---------|
+| Puertos abiertos | 21 | Cierre de servicios innecesarios y desvinculación del arranque | 2 (ssh 22 y apache2 8)
+| Servicios / versiones visibles | vsftpd 2.3.4, ISC BIND 9.4.2, PostgreSQL, TomCAt, etc | Desactivación y detención de los no esenciales | OpenSSH 4.7p1 y Apache httpd 2.2.8 |
+| Respuesta al ping | Responde a ping | Regla de corta fuego en la MV vulnerable | Paquetes sin respuesta |
 
 ## B5. Preguntas finales
 ### 1- ¿Qué contramedida ha reducido más lo que ve el atacante? ¿Por qué?
-Cerrar los puertos es lo que mas a reducido el peligro, pero al ser un SOp sin soporte sigue habiendo peligro. 
-Ha reducido lo que el atacante ve porque son puertas que cerramos y el atacante no puede usar para entrar al equipo.
+
+La contramedida que más ha reducido lo que ve el atacante es la desactivación  y cierre de servicios innecesarios (puertos). Al eliminar esos servicios minimizamos drásticamente la superficie de ataque visible ante un escaneo de puertos. Aunque al tratarse de un SOp obsoleto, el riesgo cero no existe y requiere otras medidas adicionales de defensa.
 
 ### 2- Si solo ocultáis un banner pero el servicio sigue activo, ¿la vulnerabilidad sigue ahí? Razonad la respuesta
 Sí, porque aun que no se va sigue existiendo. Si el atacante averigua esa vulnerabilidad la puede explotar.
