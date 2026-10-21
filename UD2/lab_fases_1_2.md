@@ -10,10 +10,9 @@ Para apagar la máquina se una el comando $ sudo shutdown -h now
 
 ## B2. Medición ANTES
 
-Al hacer el ejercicio 3 primero no tengo capturas del comando en el Auditor, y tampoco conté los puertos abiertos.
+Al hacer el ejercicio 3 primero no tengo capturas del comando en el Auditor. Pero salían 21 puertos abiertos desde la máquina auditora.
 
-
-## B3. Contramedidas (en Torrent-Vulnerable, con sudo
+## B3. Contramedidas (en Torrent-Vulnerable, con sudo)
 
 ### CONTRAMEDIDA 1 
 
@@ -153,11 +152,11 @@ En rc2.d he encontrado 2 servicios con nfs. Para encontrar la ruta se usa el com
 
 4. Al ser un script hay que reiniciar la máquina con:
 ```
-📌$ sudo reboot
+📌 $ sudo reboot
 ```
 5. Comprobar que el puerto se ha cerrado:
 ```
-📌$ sudo netstat -tulpn | grep 2049
+📌 $ sudo netstat -tulpn | grep 2049
 ```
 <img width="658" height="107" alt="image" src="https://github.com/user-attachments/assets/f91c9499-ab1d-40d0-9c52-cfaf002abd14" />
 
@@ -268,12 +267,18 @@ Rellenad la tabla:
 
 La contramedida que más ha reducido lo que ve el atacante es la desactivación  y cierre de servicios innecesarios (puertos). Al eliminar esos servicios minimizamos drásticamente la superficie de ataque visible ante un escaneo de puertos. Aunque al tratarse de un SOp obsoleto, el riesgo cero no existe y requiere otras medidas adicionales de defensa.
 
-### 2- Si solo ocultáis un banner pero el servicio sigue activo, ¿la vulnerabilidad sigue ahí? Razonad la respuesta
-Sí, porque aun que no se va sigue existiendo. Si el atacante averigua esa vulnerabilidad la puede explotar.
+### 2- Si solo ocultáis un banner pero el servicio sigue activo, ¿la vu*lnerabilidad sigue ahí? Razonad la respuesta
+
+Sí, porque aun que no se ve la vulnerabildiad sigue existiendo. Ocultar o modiifcar el banner no elimina la vulnerabilidad. 
+Aunque a simple vista no se muestre, el SW vulnerable sigue ejecutándose en el puerto y un atacante puede identificarla.
 
 
 ### 3- Torrent-Vulnerable usa un sistema operativo sin soporte desde hace años. ¿Puede una contramedida de estas sustituir a actualizarlo? ¿Qué haríais en una empresa real?
 
+No, una contramedida no puede sustituir un soporte. Puedes hacer cosas para que sea un poco más difícil que un atacante entre al equipo, pero al no tener actualizaciones siempre puede quedar una puerta abierta.
+En una empresa real no usaría un SOp obsoleto, buscaría uno con soporte para mantener la seguridad y confianza de la emrpesa.
 
 ### 4- De todas las contramedidas de las partes A y B, ¿cuáles evitan que el atacante encuentre información y cuáles solo ayudan a detectar que lo están intentando?
 
+* Contramedidas que evitan que el atacante encuentre información: Cierre y desactivación de servicios innecesarios, bloqueo de las solicitudes eco, no poner información para que no salga en el whois.
+* Contramedidas que solo ayudan a detectar que lo están intentando: Registrar los escaneos con el cortafuegos con la regla iptables -j LOG permite monitorizar y almacenar los registros del kernel.
