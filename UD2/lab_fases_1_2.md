@@ -18,45 +18,69 @@ Para apagar la máquina se una el comando $ sudo shutdown -h now
 ## B3. Contramedidas (en Torrent-Vulnerable, con sudo
 
 ### COMANDO FIND
-También se puede encontrar un servicio con el siguiente comando 📌`$ sudo find / -name "*nombre_servicio*" 2>/dev/null`
-
+También se puede encontrar un servicio con el siguiente comando 
+```
+📌$ sudo find / -name "*nombre_servicio*" 2>/dev/null
+```
 ### :pushpin: ¿Cuándo usar 'ls' o 'grep'?
 Depende de si vas a consultar una **carpeta** o un **archivo de texto** (configuración).
 1. Usar 'ls' cuando buscas dentro de una **carpeta** donde cada servicio es un archivo independiente
 2. Usar 'grep -n' cuando buscas dentro de un **archivo de configuración**.
 
 **Como usar 'ls' correctamente**
-:pushpin:`$ ls -l /etc/carpeta | grep nombre_servicio`
+```
+📌 $ ls -l /etc/carpeta | grep nombre_servicio
+```
 
 **También puedes buscar dentro de todas las carpetas a la vez:**
-:pushpin:`$ sudo ls -l /etc/init.d/ /etc/xinetd.d/ /etc/rc2.d/ | grep nombre_servicio`
-
+```
+📌 $ sudo ls -l /etc/init.d/ /etc/xinetd.d/ /etc/rc2.d/ | grep nombre_servicio
+```
 **Como usar 'grep -n' correctamente**
-:pushpin:`$ sudo grep -n nombre_servicio /etc/archivo_de_confi`
-
+```
+📌 $ sudo grep -n nombre_servicio /etc/archivo_de_confi
+```
 **Atajo para buscar dentro de todo el sistema**
-:pushpin:`$ sudo grep -rn "nombre_de_confi" /etc/` (-r busca de forma recursiva en las carpetas y -n muestra el archivo u nº de línea exacto)
-
+```
+📌 $ sudo grep -rn "nombre_de_confi" /etc/ (-r busca de forma recursiva en las carpetas y -n muestra el archivo u nº de línea exacto)
+```
 ### 📌 Como saber si es el servicio es una carpeta, archivo de texto o script
 1. Si al hacer ls -l aparece la d es un directorio
 2. Si aparece rw es un archivo de texto
 3. Si aparece al menos una x (aunque también estén rw) es un script
 
-### SERVICIO EJECUTADO POR XINETD
-**1-** Hacer un nmap (ver que puertos están abiertos) desde la máquina linux con el comando  :pushpin:`$ nmap -sV 192.168.1.101 -oN antes.txt`
+### 🔄 ¿Cómo recargar los cambios según el archivo modificado?
+* **Si modifico `/etc/inetd.conf` (INETD):**
+ ```
+ 📌 sudo /etc/init.d/openbsd-inetd restart
+```
 
+* **Si modifico un archivo en '/etc/xinetd.d/' (XINETD):**
+```
+📌 sudo /etc/init.d/xinetd reload
+```
+---------------------------------------------------------------------------------------------------
+### SERVICIO EJECUTADO POR XINETD (ARCHIVO)
+**1-** Hacer un nmap (ver que puertos están abiertos) desde la máquina linux con el comando 
+```
+📌 $ nmap -sV 192.168.1.101 -oN antes.txt
+```
 **Conectarse con el PUTTY poniendo la IP 192.168.56.2**
 
 **2-** Hacer un :pushpin:`$ sudo netstat -tulpn` en *metasploitable* para ver todos los servicios que tengan el puerto abierto
 
 
-**3-** Escoger un servicio, en mi caso el del puerto 513 y mirar dentro de */etc/services* con el comando :pushpin:`$ grep  513 /etc/services`
-
+**3-** Escoger un servicio, en mi caso el del puerto 513 y mirar dentro de */etc/services* con el comando
+```
+📌 $ grep  513 /etc/services
+```
 <img width="510" height="92" alt="image" src="https://github.com/user-attachments/assets/a4039ecb-1345-4476-9c9f-bb20a54075eb" />
 
 
-**4-**  Ahora al encontrar el nombre del proceso (en este caso login ) tengo que buscar dentro de */etc/inetd.d* y dentro de */etc/xinetd.d* con el comando :pushpin:`$ sudo grep -n -w login /etc/`
-
+**4-**  Ahora al encontrar el nombre del proceso (en este caso login ) tengo que buscar dentro de */etc/inetd.d* y dentro de */etc/xinetd.d* con el comando 
+```
+📌 $ sudo grep -n -w login /etc/
+```
 <img width="863" height="66" alt="image" src="https://github.com/user-attachments/assets/515af8cd-58fa-4587-b2f7-2034abeab2f6" />
 
 
@@ -65,22 +89,26 @@ Depende de si vas a consultar una **carpeta** o un **archivo de texto** (configu
 <img width="315" height="40" alt="image" src="https://github.com/user-attachments/assets/07b924d1-3588-4032-af62-27e24d124d00" />
 
 
-**6-** Recargar el archivo modificado anteriormente con el comando :pushpin:`$ sudo /etc/init.d/xineted reload`   (siempre poner el mismo path si se modifica inet.d o xinetd)
-
+**6-** Recargar el archivo modificado anteriormente con el comando:
+```
+ 📌 $ sudo /etc/init.d/xinetd reload
+```
 <img width="605" height="42" alt="image" src="https://github.com/user-attachments/assets/ef371fcd-9f84-4acb-baa3-73bd0be4bf63" />
 
-
-
-**7-** Comprobar que el puerto se ha cerrado con el comando :pushpin:`$ sudo netstat -tulpn | grep 513` (pongo 513 porque es el puerto que estaba abierto)
-
+**7-** Comprobar que el puerto se ha cerrado con el comando  (pongo 513 porque es el puerto que estaba abierto)
+```
+📌 $ sudo netstat -tulpn | grep 513
+```
 <img width="970" height="140" alt="image" src="https://github.com/user-attachments/assets/14e4ddd2-ee99-4cf4-8bab-304ef674cf6c" />
 
 
 --------------------------------------------------------------------------------------------------
-### SERVICIO EJETUDAO POR -
+### SERVICIO EJECUTADO POR - (SCRIPT)
 
-**1-** Averiguar el nombre del servicio 2049 con el comando :pushpin:`$grep 2049 /etc/services`
-
+**1-** Averiguar el nombre del servicio 2049 con el comando 
+```
+📌 $grep 2049 /etc/services
+```
 <img width="737" height="101" alt="image" src="https://github.com/user-attachments/assets/2c49ad88-5162-4ec6-9923-f916af93c96e" />
 
 
@@ -95,31 +123,40 @@ En rc2.d he encontrado 2 servicios con nfs. Para encontrar la ruta se usa el com
 <img width="942" height="86" alt="image" src="https://github.com/user-attachments/assets/0df25fc3-5b24-4833-88b8-77b17408e729" />
 
 **3-** Al ser un script no podemos ponerle una # como los que están dentro de un .conf, entonces hay que hacer lo siguiente (hay dos NFS, las fotos es de uno, pero hay que hacerlo en los dos):
-1. Detener el proceso para que no haya problemas con el comando 📌`$ sudo /etc/init.d/nfs-common remove`
-   
+1. Detener el proceso para que no haya problemas con el comando:
+```
+📌 $ sudo /etc/init.d/nfs-common stop
+```   
 <img width="937" height="47" alt="image" src="https://github.com/user-attachments/assets/df03bc86-f722-4db6-9ecf-3cbda5fa7763" />
 
-2. Borrar los enlaces de rc2.d (no se elimina, pero al no estar en esa carpeta no se ejecuta) con el comando 📌`$ sudo update-rc.d -f nfs-common remove`
-
+2. Borrar los enlaces de rc.d (no se elimina, pero al no estar en esa carpeta no se ejecuta) con el comando:
+```
+📌 $ sudo update-rc.d -f nfs-common remove
+```
 <img width="727" height="220" alt="image" src="https://github.com/user-attachments/assets/2470de98-dd5f-4b89-905d-040f60f5fff0" />
 
-3. Comprobar que se ha eliminado de la carpeta rc2.d (sale ese nfs porque aún no lo he borrado).
+3. Comprobar que se ha eliminado de las carpetas rc.d (sale ese nfs porque aún no lo he borrado).
 
 <img width="535" height="52" alt="image" src="https://github.com/user-attachments/assets/d3e82641-7903-44d9-bf6f-d593aa752c1c" />
 
-4. Al ser un script hay que reiniciar la máquina con 📌`$ sudo reboot`
-5. Comprobar que el puerto se ha cerrado 📌´$ sudo netstat -tulpn | grep 2049´
-
+4. Al ser un script hay que reiniciar la máquina con:
+```
+📌$ sudo reboot
+```
+5. Comprobar que el puerto se ha cerrado:
+```
+📌$ sudo netstat -tulpn | grep 2049
+```
 <img width="658" height="107" alt="image" src="https://github.com/user-attachments/assets/f91c9499-ab1d-40d0-9c52-cfaf002abd14" />
 
 ----------------------------------------------------------------------------------------------------
-### Servicio con nombre jsvc
+### Servicio con nombre jsvc (SCRIPT)
 
 **1-** Encontrar el servicio. He hecho todo lo de las capturas y no he encontrado nada al respecto sobre ese servicio
 
 <img width="913" height="68" alt="image" src="https://github.com/user-attachments/assets/a6f3274f-eb23-4a0f-84a6-6c3b4304bee9" />
 
-**2-** Para poder encontrarlo he tenido que hacer 📌`$ sudo grep -r jsvc /etc/` . Jsvc no es el nombre del servicio, realmente se llama tomcat5.5 y está dentro de rc2.d
+**2-** Para poder encontrarlo he tenido que hacer `📌$ sudo grep -r jsvc /etc/` . Jsvc no es el nombre del servicio, realmente se llama tomcat5.5 y está dentro de rc2.d
 
 <img width="702" height="253" alt="image" src="https://github.com/user-attachments/assets/922c27ce-78c1-4bdb-8b5c-7a5e6467713d" />
 
@@ -127,18 +164,23 @@ En rc2.d he encontrado 2 servicios con nfs. Para encontrar la ruta se usa el com
 
 <img width="836" height="76" alt="image" src="https://github.com/user-attachments/assets/b29460eb-5bee-4475-aa6c-76c1423aef85" />
 
-**4-** Como es un ejecutable tengo que detener el proceso con el comando 📌 $ sudo /etc/init.d/tomcat5.5 stop
-
+**4-** Como es un ejecutable tengo que detener el proceso con el comando 
+```
+📌 $ sudo /etc/init.d/tomcat5.5 stop
+```
 <img width="631" height="46" alt="image" src="https://github.com/user-attachments/assets/73c9f841-bad2-4bdc-8cf3-91399a9ad549" />
 
-**5-** Una vez detenido lo elimino de las carpetas rc para que no se ejecute al arrancar con el comando 📌 $ sudo 
-
+**5-** Una vez detenido lo elimino de las carpetas rc para que no se ejecute al arrancar con el comando 
+```
+📌 $ sudo update-rc.d -f tomcat5.5 remove
+```
 <img width="687" height="50" alt="image" src="https://github.com/user-attachments/assets/e4194c71-9478-4788-bd86-def4a1357f8f" />
 
 **6-** Comprobar que el servicio se ha parado y reiniciar la máquina:
 
 <img width="616" height="57" alt="image" src="https://github.com/user-attachments/assets/6316485c-5cad-4d3d-b9de-4af351c89de4" />
 
+----------------------------------------------------------------------------------------------------
 
 ## B4. Medición DESPUÉS
 
