@@ -210,8 +210,15 @@ SERVICIO CON NOMBRE PROPIO (MYSQL) mysqld
 📌 $ sudo /etc/init.d/mysql stop
 ```
 
+<img width="951" height="62" alt="image" src="https://github.com/user-attachments/assets/2112ec04-1d43-436a-bef8-e526270908f9" />
 
+2. Eliminarlo de rc.d
 
+<img width="642" height="65" alt="image" src="https://github.com/user-attachments/assets/700e77ac-8eb8-4009-8533-8cca9839f9b7" />
+
+3. Comprobar que se ha cerrado y hacer reboot a la máquina:
+   
+<img width="671" height="61" alt="image" src="https://github.com/user-attachments/assets/8117df81-af98-4dd0-b8f8-94d70fa9ab5f" />
 
 
 ## B4. Medición DESPUÉS
