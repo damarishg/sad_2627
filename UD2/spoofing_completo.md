@@ -89,3 +89,7 @@ Una medida de prevención es la doble autenticación.
 
 ### 🔗 Fuente
 Grupo 4
+
+## De los cuatro, ¿cuál creéis que sería el más plausible contra Estudio Torrent (wifi de oficina, ERP online, disco compartido con clientes)? Razonad la respuesta en 3-4 líneas, usando lo que habéis aprendido de los cuatro ataques, no solo del vuestro.
+
+Creo que la captura de usuarios y contraseñas porque al usar ERP online y un disco compartido con clientes los hace vulnerables al factor humano y phishing. Este método permite acceder directamente a los recursos internos de la empresa usando identidades legítimas robadas.
