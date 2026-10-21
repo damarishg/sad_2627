@@ -16,6 +16,7 @@ Detenido un hombre de 52 años al que se le imputa un presunto delito de estafa 
 Implementar protocolos de autenticación de dominios SPF, DKIM y DMARC en los servidores de correo.
 
 ### 🔗 Fuente
+Grupo 3
 
 ## 2. DNS spoofing
 
@@ -35,6 +36,7 @@ Google confirmó que su servicio Public DNS fue interceptado por proveedores tur
 DNSSEC (Domain Name System Security Extensions), usar configuraciones seguras en los servidores DNS y la vigilancia continua de la actividad de la red.
 
 ### 🔗 Fuente
+Grupo 2
 
 ## 3. IP spoofing
 
@@ -86,3 +88,4 @@ Pasó en Octubre de 2025, mayor exposición e datos de la historia. 30 conjuntos
 Una medida de prevención es la doble autenticación.
 
 ### 🔗 Fuente
+Grupo 4
