@@ -34,7 +34,7 @@ Google confirmó que su servicio Public DNS fue interceptado por proveedores tur
 ### 🛠️ Medida de prevención
 DNSSEC (Domain Name System Security Extensions), usar configuraciones seguras en los servidores DNS y la vigilancia continua de la actividad de la red.
 
-### Fuente
+### 🔗 Fuente
 
 ## 3. IP spoofing
 
@@ -65,7 +65,7 @@ Se puede prevenir este ataque de varias formas, entre ellos:
 
 **Formación en materia de seguridad:** Enseñar a los usuarios a evitar trampas como enlaces sospechosos para mitigar los datos de la suplantación de IP.
 
-### Fuente
+### 🔗 Fuente
 https://www.keyfactor.com/es/blog/what-it-is-ip-spoofing-how-to-protect-against-it/
 
 ## 4. Captura de cuentas de usuario y contraseñas
@@ -85,4 +85,4 @@ Pasó en Octubre de 2025, mayor exposición e datos de la historia. 30 conjuntos
 ### 🛠️ Medida de prevención
 Una medida de prevención es la doble autenticación.
 
-### Fuente
+### 🔗 Fuente
