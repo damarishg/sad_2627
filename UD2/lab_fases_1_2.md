@@ -26,20 +26,20 @@ Depende de si vas a consultar una **carpeta** o un **archivo de texto** (configu
 1. Usar 'ls' cuando buscas dentro de una **carpeta** donde cada servicio es un archivo independiente
 2. Usar 'grep -n' cuando buscas dentro de un **archivo de configuración**.
 
-**Como usar 'ls' correctamente**
+**💡 Como usar 'ls' correctamente**
 ```
 📌 $ ls -l /etc/carpeta | grep nombre_servicio
 ```
 
-**También puedes buscar dentro de todas las carpetas a la vez:**
+**💡 También puedes buscar dentro de todas las carpetas a la vez:**
 ```
 📌 $ sudo ls -l /etc/init.d/ /etc/xinetd.d/ /etc/rc2.d/ | grep nombre_servicio
 ```
-**Como usar 'grep -n' correctamente**
+**💡 Como usar 'grep -n' correctamente**
 ```
 📌 $ sudo grep -n nombre_servicio /etc/archivo_de_confi
 ```
-**Atajo para buscar dentro de todo el sistema**
+**💡 Atajo para buscar dentro de todo el sistema**
 ```
 📌 $ sudo grep -rn "nombre_de_confi" /etc/ (-r busca de forma recursiva en las carpetas y -n muestra el archivo u nº de línea exacto)
 ```
