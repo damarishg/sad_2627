@@ -59,6 +59,17 @@ Depende de si vas a consultar una **carpeta** o un **archivo de texto** (configu
 ```
 📌 sudo /etc/init.d/xinetd reload
 ```
+
+### ⚙️ Servicios lanzados desde `/etc/rc.local` ( Por ejemplo: rmiregistry / Puerto 1099)
+Si el servicio no aparece en `/etc/initd.d/`, `inetd.conf`, `/etc/xinetd.d/`, `xinetd.conf`, `/etc/rc2.d/` o alguna otra ruta mencionada en la guía lo más probable es que se se arranque al inicio desde `/etc/rc.local`
+
+**PASOS PARA DETENER EL SERVICIO**
+1. Matar el proceso activo en memoria:
+```
+📌 sudo killall nombre_servicio # Ejemplo: sudo killall rmiregistry
+```
+2. Editar el archivo de rc.local poniendo # delante de la línea del servicio
+
 ---------------------------------------------------------------------------------------------------
 ### SERVICIO EJECUTADO POR XINETD (ARCHIVO)
 **1-** Hacer un nmap (ver que puertos están abiertos) desde la máquina linux con el comando 
