@@ -1,10 +1,62 @@
-## Parte B · ¿De dónde vienen los programas instalados?
+## ✅ Parte A · ¿Está actualizado el sistema?
+### 💡 A1. Anotad qué versión de sistema operativo y kernel tenéis:
+
+```
+📌 $ lsb_release -a
+📌 $ uname -r
+```
+Versión del SOP -> Ubuntu 24.04.3 LTS
+
+<img width="406" height="132" alt="image" src="https://github.com/user-attachments/assets/def9a0ac-0185-4ce9-ad4c-d6db92cf5d95" />
+
+Versión del Kernel -> 7.0.0-31-generic
+
+<img width="295" height="57" alt="image" src="https://github.com/user-attachments/assets/da55f410-8e5e-42d2-8f90-d266147f600d" />
+
+### 💡 A2. Pedid al sistema la lista de paquetes disponibles y qué se puede actualizar:
+
+```
+📌 $ sudo apt update
+📌 $ apt list --upgradable
+```
+
+**Anotad: ¿cuántos paquetes tienen actualización pendiente?**
+
+
+
+
+### 💡 A3. Simulad la actualización sin aplicarla:
+
+```
+📌 $ sudo apt-get -s upgrade |head -30
+```
+La opción -s es "simular". Fijaos en que dice qué instalaría, pero no toca nada.
+
+
+### 💡 A4. ¿Y si el sistema ya no recibe parches? Buscad en https://endoflife.date la fecha de fin de soporte de:
+* La versión de Ubuntu/Debian de vuestro Torrent-Auditor.
+* Ubuntu 8.04, la que tiene Torrent-Vulnerable (Metasploitable2).
+
+Rellenad:
+
+| Sistema | Fecha de fin de soporte | ¿Recibe parches hoy? |
+|---------|-------------------------|----------------------|
+| Torrent-Auditor | 
+| Torrent-Vulnerable (Ubuntu 8.04) | 09 de mayo de 2013 | No |
+
+### Pregunta A: En la oferta de empleo de Torrent (dossier de la UD02) decían que trabajaban con "Ubuntu 8.04". Aunque pusieran todas las contraseñas bien, ¿qué problema sigue sin tener solución?
+
+El SOp no tiene soporte ni actualizaciones, tener un SOp con estas características es un error de seguridad muy grave. Como he dicho no tiene soporte y al no tener actualizaciones no tiene parches. Pueden usar Exploits para acceder al sistema sin ningún esfuerzo ni mucho conocimiento.
+
+## ✅ Parte B · ¿De dónde vienen los programas instalados?
 ### B1. Mirad de qué repositorios se descarga vuestro sistema:
 
-cat /etc/apt/sources.list
+```
+📌 $ cat /etc/apt/sources.list
 
-ls /etc/apt/sources.list.d/
-
+📌 $ ls /etc/apt/sources.list.d/
+```
+ 
 Investiga el fichero donde están configurados los repositorios y comenta el significado de cada una de las líneas y su contenido.
 
 <img width="655" height="270" alt="image" src="https://github.com/user-attachments/assets/d73a6fb5-1dd0-4b03-9830-9c7a3a97b759" />
