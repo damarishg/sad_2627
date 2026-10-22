@@ -67,6 +67,9 @@ Anotad la fecha de la base de datos:
 
 #### Veréis una línea terminada en FOUND y un resumen. Anotad el nombre con el que ClamAV bautiza la amenaza y el número de ficheros infectados.
 
+<img width="568" height="316" alt="image" src="https://github.com/user-attachments/assets/440cc146-12bf-403f-a6af-a85d1183e46c" />
+
+EL nombre con el que ClamAV bautiza la amenzaza es -> Eicar-Test-Signature y el nº de ficheros infetcados es 1.
 
 ### 🚀 D4. Escanear una carpeta entera, mostrando solo lo infectado:
 ```
@@ -82,4 +85,14 @@ Anotad la fecha de la base de datos:
 | --remove	| Borra los infectados (peligroso con falsos positivos) |
 | -l fichero.log | Guarda un registro | 
 
+
+
+### 🚀 D5. Cuarentena en vez de borrar
+```
+📌 $ mkdir -p ~/cuarentena
+📌 $ clamscan -r -i -v --move=$HOME/cuarentena ~
+📌 $ ls -l ~/cuarentena
+```
+
+#### Pregunta D: ¿Por qué suele ser mejor mover a cuarentena que borrar directamente? ¿Qué pasaría si ClamAV marcara por error un fichero importante del ERP de Torrent?
 
