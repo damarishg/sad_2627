@@ -47,3 +47,7 @@
 | 12 | Una web idéntica a la del ERP a la que se llega porque el DNS ha sido manipulado | Pharming |No | No |
 | 13 | Un programa que registra sin permiso los hábitos de navegación y los vende | Spyware | No | No |
 
+### Pregunta A: ¿Cuáles de estos incidentes no son "malware" propiamente dicho, sino fraude o ingeniería social? ¿Por qué un antivirus no los detendría?
+
+Los incidentes de phishing y bulo no son malware como tal, si no técnicas de ingeniería social y fraude. 
+Un antivirus analiza código ejecutable, procesos y archivos en búsqueda de firmas maliciosas en el sistema. Al tratarse de engaños basados en la manipulación del usuario, no existe nada ejecutándose en el equipo. El antivirus no puede detectar un engaño psicológico.
