@@ -60,6 +60,9 @@ Anotad la fecha de la base de datos:
 ```
 * **Fecha:** 22 de octubre de 2026
 
+<img width="460" height="60" alt="image" src="https://github.com/user-attachments/assets/4c4309ec-5642-4e1c-8ad1-a6200a600333" />
+
+
 ### 🚀 D3. Escanear el fichero EICAR:
 ```
 📌 $ clamscan ~/eicar.txt
@@ -136,14 +139,22 @@ Sirve para aislar de forma segura el archivo infectado impidiendo que dañe el s
 
 #### Contestad por escrito, antes de ejecutarlo:
 * **1-Qué crees que hace cada línea?**
-File-> examina el tipo de puerto sin ejecutarlo (determina si es un script Shell de texto, un binario ejecutable, etc)
-sha256sum -> calcula el hash del archivo para comprobar su integridad o contrastarla con BBDD de malware
-cat -> muestra por pantalla todo el código fuente del script en texto plano para poder leer sus instrucciones antes de ejecutarlo.
+  
+📁 File-> examina el tipo de puerto sin ejecutarlo (determina si es un script Shell de texto, un binario ejecutable, etc)
+
+📁 sha256sum -> calcula el hash del archivo para comprobar su integridad o contrastarla con BBDD de malware
+
+📁 cat -> muestra por pantalla todo el código del script en texto plano para poder leer sus instrucciones antes de ejecutarlo.
 
 * **2- ¿Crea ficheros? ¿Abre puertos? ¿Modifica algo para sobrevivir a un reinicio?**
+  
 Creación de ficheros: Sí, crea la carpeta oculta /tmp/.cache_sistema, un registro (estado.log) y una copia de sí mismo (actualizador.sh).
+
 Puertos: Sí, levanta un servidor web local en el puerto 8081 con Python (127.0.0.1)
+
 Persistencia: Sí, añade una regla @reboot en el crontab para ejecutarse automáticamente tras cada reinicio.
+
+🛑 ** NO SABÍA A QUE TE REFERÍAS EN ESTE APRTADO, SI AL .SH O A LO QUE HACEN LOS COMANDOS ANTERIORES**
 
 * **3- Si fuera un .exe binario, ¿qué habría que hacer en su lugar? (Pista: no se puede leer, habría que usar herramientas como strings o un desensamblador.)**
 
