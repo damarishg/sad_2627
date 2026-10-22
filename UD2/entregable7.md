@@ -85,6 +85,7 @@ EL nombre con el que ClamAV bautiza la amenzaza es -> Eicar-Test-Signature y el 
 | --remove	| Borra los infectados (peligroso con falsos positivos) |
 | -l fichero.log | Guarda un registro | 
 
+<img width="407" height="273" alt="image" src="https://github.com/user-attachments/assets/03700f26-f974-4db6-b0c6-377f04e320e7" />
 
 
 ### 🚀 D5. Cuarentena en vez de borrar
@@ -94,5 +95,62 @@ EL nombre con el que ClamAV bautiza la amenzaza es -> Eicar-Test-Signature y el 
 📌 $ ls -l ~/cuarentena
 ```
 
+<img width="562" height="100" alt="image" src="https://github.com/user-attachments/assets/899a1313-9d3b-4f6a-a7d2-39020cd945e6" />
+
+
 #### Pregunta D: ¿Por qué suele ser mejor mover a cuarentena que borrar directamente? ¿Qué pasaría si ClamAV marcara por error un fichero importante del ERP de Torrent?
+
+* **¿Por qué suele ser mejor mover a cuarentena que borrar directamente?**
+
+Evita pérdidas por falsos positivos, si el antivirus se equivoca con un archivo legítimo, al estar en cuarentena no se destruye de forma permanente. Permite investigar, congela la amenaza para que el analista de seguridad pueda estudiarla. Y permite devolver el archivo a su sito inmediatamente si se confirma que es seguro.
+
+* **¿Qué pasaría si ClamAV marcara por error un fichero importante del ERP de Torrent?**
+
+El programa ERP dejaría de funcionar, bloqueando la facturación, ventas o gestión de la empresa. Exigiría recurrir a copias de seguridad o reinstalar el sistema, provocando horas de parada en lugar de una simple restauración desde cuarentena.
+
+#### ¿Para qué sirve la cuarentena?
+
+Sirve para aislar de forma segura el archivo infectado impidiendo que dañe el sistema. A diferencia del borrado directo, permite prevenir la pérdida de datos si se trata de un falso positivo (pudiendo restaurarlo al instante) y conservar el fichero en un entorno controlado para su posterior análisis forense
+
+### D6. Detectar rootkits (herramienta complementaria, también de la familia "paliativa"):
+```
+📌 $ sudo apt install -y rkhunter
+📌 $ sudo rkhunter --update
+📌 $ sudo rkhunter --propupd
+📌 $ sudo rkhunter --check --sk --rwo
+```
+#### Avisos y vuestra valoración
+
+<img width="883" height="122" alt="image" src="https://github.com/user-attachments/assets/ee7aae50-5e8d-4647-89d6-8991df56b1fb" />
+
+**Valoración:** Todos los avisos son falsos positivos, el sistema está limpio y seguro.
+
+**⚠️Aviso 1 (lwp-requeest):** Este programa de gestión de peticiones web instala por defecto un script de Perl y no como binario ejecutable tradicional. Rkhunter lo marca como sospechoso por precaución pero es un archivo legítimo.
+
+**⚠️ Avisos 2, 3 y 4 (postfix y postdrop):** Ocurren porque acavo de instalar el paeuete rkhunter que trajo consigo la herramienta de correo postfix como paquete de dependencia. Al instalarse, el sistema ha creado automáticamente el usuario de postfix y los grupos postfix y postdrop. Son cambios legítimos realizados por el gestor de paquetes apt.
+
+**⚠️ Avisos 5 y 6 (Archivos ocultos en /etc):** /etc/.updat y /etc/.resolv.conf.systemd-resolved.bak son archivos temporales de respaldo creados por le propio SOp para gestionar la red y el estado del sistema. No contienen nada malicioso.
+
+
+## ✅ Parte E · Análisis estático: mirar sin ejecutar (CE d)
+
+#### Contestad por escrito, antes de ejecutarlo:
+* **1-Qué crees que hace cada línea?**
+File-> examina el tipo de puerto sin ejecutarlo (determina si es un script Shell de texto, un binario ejecutable, etc)
+sha256sum -> calcula el hash del archivo para comprobar su integridad o contrastarla con BBDD de malware
+cat -> muestra por pantalla todo el código fuente del script en texto plano para poder leer sus instrucciones antes de ejecutarlo.
+
+* **2- ¿Crea ficheros? ¿Abre puertos? ¿Modifica algo para sobrevivir a un reinicio?**
+Creación de ficheros: Sí, crea la carpeta oculta /tmp/.cache_sistema, un registro (estado.log) y una copia de sí mismo (actualizador.sh).
+Puertos: Sí, levanta un servidor web local en el puerto 8081 con Python (127.0.0.1)
+Persistencia: Sí, añade una regla @reboot en el crontab para ejecutarse automáticamente tras cada reinicio.
+
+* **3- Si fuera un .exe binario, ¿qué habría que hacer en su lugar? (Pista: no se puede leer, habría que usar herramientas como strings o un desensamblador.)**
+
+Usaría strings para extraer las cadenas de texto legibles incrustadas y emplear herramientas de ingeniería inversa para analizar el código máquina sin ejecutarlo.
+
+
+## ✅ Parte F · Análisis dinámico: observar qué hace (CE d)
+
+
 
