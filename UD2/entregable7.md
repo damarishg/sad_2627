@@ -152,5 +152,71 @@ Usaría strings para extraer las cadenas de texto legibles incrustadas y emplear
 
 ## ✅ Parte F · Análisis dinámico: observar qué hace (CE d)
 
+**PRUEBAS:**
+
+<img width="747" height="150" alt="image" src="https://github.com/user-attachments/assets/c2486e63-7e50-4510-b544-575124f8e3af" />
+
+<img width="722" height="165" alt="image" src="https://github.com/user-attachments/assets/bc161abc-b7c7-4c13-b404-87d379fd87a6" />
 
 
+**🎯 6. Rellenad el informe de comportamiento:**
+
+| Qué hace	| Evidencia (comando y salida) | ¿Qué fase del ataque recuerda? |
+|-----------|------------------------------|--------------------------------|
+| Crea ficheros o carpetas | Comando: diff ~/antes_tmp.txt ~/despues_tmp.txt Salida: Muestra la creación del directorio oculto (/tmp/.cache_sistema) y el ejecutable (/tmp/.cache_sistema/actualizador.sh )| Creación de backdoors |
+| Abre algún puerto o proceso	| Comando: diff ~/antes_procesos.txt ~/despues_procesos.txt / Salida: Muestra nuevos PIDs en ejecución correspondientes a la carga útil | Apertura del backdoor |
+| Intenta persistir (sobrevivir a un reinicio) | Comando: diff ~/antes_cron.txt ~/despues_cron.txt Salida: > @reboot /bin/bash /tmp/.cache_sistema/actualizador.sh | Persistencia |
+
+**🎯 7. Comprobad la persistencia: reiniciad la VM y volved a mirar si el comportamiento reaparece.**
+
+<img width="617" height="65" alt="image" src="https://github.com/user-attachments/assets/0d5cc8c3-4b5d-422e-9d04-ec17a73b856b" />
+
+<img width="823" height="67" alt="image" src="https://github.com/user-attachments/assets/5599eb36-69d8-41b9-89af-e6bf01e6a641" />
+
+
+Al reiniciar he comprobado con $ crontab -l que la tarea que programó el script sigue guardada, Además he hecho un $ ps aux para comprobar que el archivo actualizador.sh se ejecuta automáticamente.
+
+**🎯 8. Erradicación: documentad cómo lo eliminaríais (parar el proceso, quitar la entrada de arranque, borrar los ficheros) y verificad con los mismos comandos del paso 3 que ha desaparecido. Después podéis volver al snapshot.**
+
+**1- Parar el proceso activo:** 
+```
+📌 $ pkill -f actualizador.sh
+```
+**2- Quitar la entrada de arranque (Cron):**
+```
+📌 $ crontab -r
+```
+**3- Borrar los archivos maliciosos:**
+```
+📌 $ rm -rf /tmp/.cache.sistema
+```
+
+**Verificación**
+
+El sistema ha vuelto a quedar limpio, el malware ha sido eliminado con éxito.
+
+<img width="671" height="63" alt="image" src="https://github.com/user-attachments/assets/ef36927c-8c93-469f-a418-507bd43a6e9e" />
+
+**Pregunta F: Habéis encontrado el comportamiento comparando "antes" y "después". ¿Cuál es el equivalente en un servidor real de Torrent si nadie hizo la foto inicial? ¿Qué relación tiene con el inventario de servicios que hicisteis en la práctica anterior?**
+
+**🎯1. Si en un servidor real nadie guardó la "foto inicial", ¿cómo sabemos si ha cambiado algo?**
+
+En un entorno real no guardan los archivos de antes y después. Normalmente Saben qué programas y puertos son los normales en el PC, además de tener programas de seguridad y registros que guardan todo lo que pasa y avisan si se crea un archivo o se abre un puerto sin que hayas hecho nada.
+
+**🎯 2. ¿Qué relación tiene esto con el inventario de servicios de la práctica anterior?**
+
+El inventario es el documento donde se apunta todo lo que debería estar funcionando en el servidor (servicios y puertos autorizados). Si revisas el servidor y ves un puerto o un proceso abierto que no está apuntado en el inventario sabes que es algo sospechoso y que no debería estar ahí.
+
+## ✅ Parte G · Preventivo o paliativo (CE c, e)
+
+Clasificad cada medida:
+
+| Medida	| Preventiva |	Paliativa |
+|---------|------------|------------|
+| Mantener el sistema actualizado| ✅ | |
+| ClamAV escaneando a demanda un disco | ✅ | |
+| Descargar software solo de repositorios oficiales | ✅ | | 
+| Copia de seguridad semanal desconectada de la red |  | ✅ |
+| Cuenta de usuario sin privilegios de administrador | ✅ |  |
+| rkhunter tras sospechar una intrusión |   | ✅ |
+| Formación del personal contra el phishing | ✅ |  |
