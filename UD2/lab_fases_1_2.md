@@ -170,7 +170,9 @@ En rc2.d he encontrado 2 servicios con nfs. Para encontrar la ruta se usa el com
 **2-** Para poder encontrarlo he tenido que hacer `📌$ sudo grep -r jsvc /etc/` . Jsvc no es el nombre del servicio, realmente se llama tomcat5.5 y está dentro de rc2.d
 
 <img width="702" height="253" alt="image" src="https://github.com/user-attachments/assets/922c27ce-78c1-4bdb-8b5c-7a5e6467713d" />
-
+```
+⚠️ TAMBIÉN SE PEUDE BUSCAR DIRECTAMENTE CON EL COMANDO `📌 $ sudo grep -l jsvc /etc/inetd.d o /etc/xinetd.d` en vez de buscar en /etc/
+```
 **3-** Hago un ls dentro de rc2.d para encontrar el servicio
 
 <img width="836" height="76" alt="image" src="https://github.com/user-attachments/assets/b29460eb-5bee-4475-aa6c-76c1423aef85" />
