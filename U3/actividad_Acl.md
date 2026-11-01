@@ -135,6 +135,15 @@ Oscar:
 ```
 <img width="833" height="77" alt="image" src="https://github.com/user-attachments/assets/2e6e4823-51b7-408e-b3ad-4bf9641a768d" />
 
+**⚠️ No me deja leer los archivos con los usuarios que no están dentro de los grupos con permisos, he tenido que dar permiso de ejecución sobre planos/ para que alberto y oscar puedan acceder a los archivos**
+
+```
+📌 setfacl -m u:USUARIO:--x /srv/torrentsl/planos/
+```
+
+<img width="747" height="70" alt="image" src="https://github.com/user-attachments/assets/40426f97-a2d3-4899-b7c6-8af9a2227876" />
+
+
 **8- Valora si alguno de los permisos del diagrama debería aplicarse también como ACL por defecto (setfacl -d), para que los ficheros nuevos que se creen en planos/ hereden automáticamente esos permisos.**
 
 Creo que los permisos sobre la carpeta planos si que tendría que tener los permisos para que los hereden automáticamente.
@@ -145,6 +154,11 @@ Creo que los permisos sobre la carpeta planos si que tendría que tener los perm
 
 <img width="836" height="75" alt="image" src="https://github.com/user-attachments/assets/cf54dd9d-5f24-4088-8536-c730644f83de" />
 
+```
+📌 setfacl -R -d -m g:ingenieria:rwx /srv/torrentsl/planos/
+```
+
+<img width="836" height="50" alt="image" src="https://github.com/user-attachments/assets/1d3491fa-e0f1-4ca1-bdbe-57a668c7bb95" />
 
 ### Tarea 4 Verificación
 **9- Comprueba el resultado con getfacl sobre cada recurso:**
@@ -168,20 +182,20 @@ planos:
 
 **hmi_planta:**
 1- operarios (ALBERTO):
- ```
+```
 📌 /srv/torrentsl/hmi_planta.sh
 ```
 
 <img width="540" height="52" alt="image" src="https://github.com/user-attachments/assets/a6826794-24fe-4596-8a57-70f5b78e8a34" />
 
 2- Nestor:
- ```
+```
 📌 /srv/torrentsl/hmi_planta.sh
 ```
 <img width="541" height="50" alt="image" src="https://github.com/user-attachments/assets/f10aca8c-ccf0-4b5b-981d-34b4c3f0ec7b" />
 
 3- Lucia:
- ```
+```
 📌 /srv/torrentsl/hmi_planta.sh
 ```
 
@@ -189,21 +203,54 @@ planos:
 
 **planos:**
 1- Victor:
- ```
+```
 📌 ls -l /srv/torrentsl/planos/
 ```
 
 <img width="752" height="132" alt="image" src="https://github.com/user-attachments/assets/704025a6-db0c-43c0-88bb-dc4155176923" />
 
 2- Supervisores (JOHN):
- ```
+```
 📌 ls -l /srv/torrentsl/planos/
 ```
 
 <img width="692" height="128" alt="image" src="https://github.com/user-attachments/assets/7ad8e12a-60e0-49f5-a2f8-cd5fcf3d212c" />
 
 3- Oscar:
- ```
+```
 📌 ls -l /srv/torrentsl/planos/
 ```
-<img width="753" height="87" alt="image" src="https://github.com/user-attachments/assets/dc1d8af2-f817-434d-9788-0251588691cc" />
+```
+📌 cat /srv/torrentsl/planos/caldera.dwg
+```
+<img width="647" height="102" alt="image" src="https://github.com/user-attachments/assets/c2219fc5-6bff-4cc9-b556-9238adc2af1c" />
+
+4- Lucia:
+```
+📌 ls -l /srv/torrentsl/planos/autoclave.dwg
+```
+
+<img width="676" height="70" alt="image" src="https://github.com/user-attachments/assets/df00b3a0-aaee-4715-9e41-e83d0c6577d8" />
+
+
+### 6. Preguntas de reflexión
+
+#### 1- ¿Por qué no bastan los permisos clásicos de Unix (usuario / grupo / resto) para implementar el esquema del diagrama? Pon un ejemplo concreto de este caso.
+
+Los permisos clásicos de Unix no bastan porque solo permiten establecer permisos para 3 categorías (usuario propiertario, grupo y otros) y no en usuarios concretos, para eso necesitamos usar las ACL.
+
+Por ejemplo, en planos/, alberto y oscar deben leer un archivo dentro de la carpeta pero no a otros archivos, sobre hmi_planta nestor de ingenieria debe leerlo y ejecutarlo y lucia (propietaria) debe leer, escribir y ejecutar.
+
+
+#### 2-  ¿Qué es la máscara (mask) de una ACL y cómo afecta a los permisos efectivos de un usuario o grupo, aunque su entrada de ACL indique más permisos?
+
+La máscara de una ACL limita los permisos finales de los usuarios y grupos. Aunque una entrada ACL indique más permisos, la máscara establece el máximo de permisos que pueden tener realmente.
+
+#### 3- ¿Qué diferencia hay entre una ACL de acceso y una ACL por defecto? ¿Cuándo se aplica cada una?
+
+* **ACL de acceso:** Establece los permisos de los usuarios y grupos sobre un archivo o directorio que ya existe. Se aplica directamente sobre ese elemento. Se aplica cuando quieres dar o cambiar permisos a usuarios o grupos sobre archivos o directorios que ya existen.
+* **ACL por defecto:** Establece los permisos que heredarán los nuevos archivos y directorios que se creen dentro de un directorio. Se aplica cuando quieres que los nuevos archivos y directorios que se creen dentro de una carpeta hereden los permisos automáticamente.
+
+#### 4- Si mañana se incorpora un nuevo operario, ¿qué pasos tendrías que repetir para darle exactamente el mismo acceso que al resto de operarios?
+
+Primero crearía al nuevo usuario y lo añadiría al grupo operarios, después le tendría que dar permisos de ejecución (y lectura) sobre mhmi_planta.sh para que pueda acceder a él y en el caso de que necesite acceder a algún archivo de dentro de planos/ le daría el permiso requerido, por ejemplo lectura y sobre planos/ le daría el permiso de ejecución para que pueda acceder al contendido de dentro de la carpeta.
