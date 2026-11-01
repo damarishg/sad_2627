@@ -39,11 +39,11 @@ Añadir usuario a grupo:
 
 **3. Crea la estructura de ficheros: un fichero (o script) ejecutable llamado hmi_planta, y una carpeta planos/ con los ficheros autoclave.dwg, caldera.dwg y destilacion.dwg.**
 
-**1.**Creo una carpeta para que esté todo dentro de ella:
+**1.** Creo una carpeta para que esté todo dentro de ella:
 ```
 📌 $ mkdir -p /srv/torrentsl
 ```
-**2.**Crear el script dentro de torrentsl (dentro poner un echo para comprobar que los permisos están bien):
+**2.** Crear el script dentro de torrentsl (dentro poner un echo para comprobar que los permisos están bien):
 ```
 📌 $ nano /srv/torrentsl/hmi_planta.sh
 ```
