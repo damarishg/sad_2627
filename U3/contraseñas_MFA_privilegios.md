@@ -1,4 +1,4 @@
-#  PARTE 1 Contraseñas robustas con PAM
+<img width="317" height="80" alt="image" src="https://github.com/user-attachments/assets/89485215-3f42-4a18-9c42-f2b019780d2c" />#  PARTE 1 Contraseñas robustas con PAM
 ## 1.1 ¿Por qué PAM y no tocar /etc/shadow directamente?
 PAM (Pluggable Authentication Modules) es la capa que usa Linux para gestionar la autenticación de cualquier
 programa: login, su, passwd, sshd... Configurar la política de contraseñas en PAM significa que se aplica una sola
@@ -102,20 +102,52 @@ pwquality decide si una contraseña es lo bastante fuerte al crearla; chage deci
 
 <img width="597" height="85" alt="image" src="https://github.com/user-attachments/assets/587662eb-b9d4-411f-bbe2-1689b2598f84" />
 
+<img width="757" height="215" alt="image" src="https://github.com/user-attachments/assets/cce58345-17b4-4cfa-8089-c91042fba4da" />
 
 #  PARTE 2 MFA en SSH con Google Authenticator
-
-
 ## 2.1 El concepto: TOTP
-
+TOTP (Time-based One-Time Password) genera un código de 6 dígitos que cambia cada 30 segundos, a partir de un secreto compartido entre el servidor y tu app (Google Authenticator, Authy, FreeOTP...) y la hora actual. 
+Aunque alguien robe tu contraseña, sin ese secreto no puede generar el código — por eso es un segundo factor («algo que tienes»), no solo «algo que sabes».
 
 ## 2.2 Instalar el módulo PAM
+```
+📌 $ sudo apt install libpam-google-authenticator
+```
+
+<img width="697" height="45" alt="image" src="https://github.com/user-attachments/assets/6336b3cf-91a3-4823-8823-ade7b03d22ff" />
 
 
 ## 2.3 Generar el secreto (lo hace cada usuario, con su propia cuenta)
+```
+📌 $ su - hugo
+```
 
+<img width="317" height="80" alt="image" src="https://github.com/user-attachments/assets/294143a2-1c77-4bc1-980f-6a4053af32a5" />
+
+**⚠️ Instalar Google Authenticator en tu móvil**
+
+```
+📌 $ google-authenticator
+```
+
+<img width="456" height="66" alt="image" src="https://github.com/user-attachments/assets/a4d2f6fa-b1ff-4979-90bd-6f1680b92be9" />
+
+
+<img width="770" height="268" alt="image" src="https://github.com/user-attachments/assets/6d95a2e9-cb1a-447a-a237-3ada45dbd09c" />
 
 ## 2.4 Conectar Google Authenticator con sshd
+Añade esta línea al final de /etc/pam.d/sshd (después de @include common-auth, para que primero se compruebe la contraseña y después el código):
+
+```
+📌 auth required pam_google_authenticator.so
+```
+
+**⚠️ Tienes que tener instalado SSH para poder hacerlo**
+```
+📌 sudo apt install openssh-server
+```
+
+
 
 ## 2.5 Verificación
 
