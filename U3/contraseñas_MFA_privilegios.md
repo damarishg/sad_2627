@@ -142,14 +142,34 @@ Añade esta línea al final de /etc/pam.d/sshd (después de @include common-auth
 📌 auth required pam_google_authenticator.so
 ```
 
+<img width="442" height="80" alt="image" src="https://github.com/user-attachments/assets/2ea844dc-5cc3-44b1-89db-47566d10b998" />
+
+
 **⚠️ Tienes que tener instalado SSH para poder hacerlo**
 ```
 📌 sudo apt install openssh-server
 ```
 
+Y en /etc/ssh/sshd_config, asegúrate de que estas directivas están así (el nombre exacto puede variar según la versión de OpenSSH: en las más recientes es KbdInteractiveAuthentication, en las antiguas ChallengeResponseAuthentication):
+```
+📌 $ sudo nano /etc/ssh/sshd_config
+```
+<img width="301" height="42" alt="image" src="https://github.com/user-attachments/assets/7378c4c7-66ba-46fd-b2a8-a4bc292e074d" />
 
+<img width="353" height="47" alt="image" src="https://github.com/user-attachments/assets/b924146d-9f53-4145-9b17-b6ddde011f7e" />
+
+<img width="133" height="56" alt="image" src="https://github.com/user-attachments/assets/7a7bc7b4-d013-49f8-8a00-5a4d4c42f3fa" />
+
+Reiniciar el servicio ssh para guardar todo:
+```
+📌 $ sudo systemctl restart ssh
+```
+
+<img width="528" height="42" alt="image" src="https://github.com/user-attachments/assets/60ab77dc-73f8-496a-8497-788302262a44" />
 
 ## 2.5 Verificación
+**1. Desde otra terminal (o desde el móvil con un cliente SSH), conéctate como el usuario que configuró el MFA.**
+
 
 
 ## 2.6 ¿A quién se lo exigimos?
