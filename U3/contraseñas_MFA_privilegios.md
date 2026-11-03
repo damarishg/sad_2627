@@ -1,4 +1,4 @@
-<img width="317" height="80" alt="image" src="https://github.com/user-attachments/assets/89485215-3f42-4a18-9c42-f2b019780d2c" />#  PARTE 1 Contraseñas robustas con PAM
+#  PARTE 1 Contraseñas robustas con PAM
 ## 1.1 ¿Por qué PAM y no tocar /etc/shadow directamente?
 PAM (Pluggable Authentication Modules) es la capa que usa Linux para gestionar la autenticación de cualquier
 programa: login, su, passwd, sshd... Configurar la política de contraseñas en PAM significa que se aplica una sola
