@@ -170,9 +170,40 @@ Reiniciar el servicio ssh para guardar todo:
 ## 2.5 Verificación
 **1. Desde otra terminal (o desde el móvil con un cliente SSH), conéctate como el usuario que configuró el MFA.**
 
+**2. Comprueba que primero pide la contraseña y después el código de 6 dígitos de la app.**
+Conexión de Hugo:
 
+<img width="872" height="247" alt="image" src="https://github.com/user-attachments/assets/9b80cb3d-d57f-4775-8926-092354b71f5a" />
+
+**3. Prueba a escribir un código incorrecto y comprueba que la conexión se rechaza.**
+
+<img width="752" height="170" alt="image" src="https://github.com/user-attachments/assets/44fd2470-3718-45da-b9ff-6bf99f0acd34" />
 
 ## 2.6 ¿A quién se lo exigimos?
+El módulo pam_succeed_if permite condicionar una regla de PAM a la pertenencia a un usuario o grupo.
+Realiza las investigaciones necesarias para crear un grupo al cual exigirle autenticación de doble factor
+
+**Paso 1:** Crear un grupo
+```
+📌 $ sudo groupadd mfa
+```
+<img width="412" height="57" alt="image" src="https://github.com/user-attachments/assets/e3d95105-da20-497d-a68b-7582e9667536" />
+
+**Paso 2:** Añadir usuarios (hugo y carlos) al grupo creado
+```
+📌 $ sudo usermod -aG mfa usuario
+```
+<img width="487" height="53" alt="image" src="https://github.com/user-attachments/assets/2ebae8b1-3bef-4018-b1f1-84ae5c54ce41" />
+
+**Paso3:** Modificar PAM
+```
+📌 $ sudo nano /etc/pam.d/sshd
+```
+
+<img width="696" height="115" alt="image" src="https://github.com/user-attachments/assets/41ca5308-4d7f-4914-8bd8-c39ad0c33acc" />
+
+* **success=ignore:** Si el usuario pertenece al grupo mfa. la comprobación tiene éxito y PAM continúa con la siguiente regla, que solicita el código de Google Athenticator.
+* **default=1:** Si el usuario no pertenece al grupo mfa, se aplica la acción predeterminada y se salta la siente regla PAM ( la de Google Authenticator).
 
 
 #  PARTE 3 Privilegios justos con sudo
