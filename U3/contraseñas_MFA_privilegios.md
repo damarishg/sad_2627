@@ -209,26 +209,74 @@ Realiza las investigaciones necesarias para crear un grupo al cual exigirle aute
 #  PARTE 3 Privilegios justos con sudo
 
 ## 3.1 Por qué no usar la cuenta root a diario
-
+Es el mismo principio de mínimo privilegio que ya vimos con UAC en Windows: si una cuenta con la que se trabaja a diario tiene siempre todos los permisos, cualquier error o malware que la afecte tiene también todos los permisos. sudo permite conceder, comando a comando, exactamente lo que cada grupo necesita, sin compartir la contraseña de root ni dar una cuenta de administrador completa
 
 ## 3.2 Sintaxis básica de sudoers
+Las reglas de sudo nunca se editan a mano con un editor cualquiera: se usa visudo, que comprueba la sintaxis antes de guardar y evita dejar el sistema sin forma de usar sudo por un error de tecleo. Lo recomendado es crear un fichero propio en /etc/sudoers.d/ en vez de tocar /etc/sudoers directamente.
 
+<img width="732" height="172" alt="image" src="https://github.com/user-attachments/assets/566f5906-0edf-4d79-b36a-33cc2c5f213f" />
+
+El % delante del nombre indica que es un grupo, no un usuario. NOPASSWD es una excepción pensada solo para un script muy concreto y de bajo riesgo (una auditoría de solo lectura); como norma general, que sudo pida contraseña es lo deseable.
 
 ## 3.3 Práctica guiada
+### 1. Crea un script de prueba /usr/local/bin/auditoria_planta.sh que simplemente muestre un mensaje, y dale permiso de ejecución:
+Creación del script:
+```
+$ sudo tee /usr/local/bin/auditoria_planta.sh <<'EOF'
+#!/bin/bash
+echo "[$(date)] Auditoría de planta ejecutada por $(whoami)"
+EOF
+```
+<img width="741" height="180" alt="image" src="https://github.com/user-attachments/assets/ecaa3dfa-63a4-474d-805b-7838b8a5b9cf" />
 
+Permios:
+
+```
+📌 $ sudo chmod 755 /usr/local/bin/auditoria_planta.sh
+```
+<img width="721" height="40" alt="image" src="https://github.com/user-attachments/assets/071f3e33-b291-46e3-a8bb-65cf807aa65d" />
+
+### 2. Crea el fichero de reglas con visudo, apuntando a un fichero nuevo en sudoers.d:
+```
+📌 $ sudo visudo -f /etc/sudoers.d/torrent
+```
+
+<img width="1105" height="77" alt="image" src="https://github.com/user-attachments/assets/0e377d81-3d92-4e94-b503-a8ec9ac62af9" />
 
 ## 3.4 Verificación
+### 5. Comprueba lo que puede hacer cada usuario con sudo -l:
+**Nestor:**
+
+<img width="956" height="187" alt="image" src="https://github.com/user-attachments/assets/177c6d4b-e139-4be3-8000-5fba84cfbaca" />
+
+Nestor pertenece al grupo de ingenieria. Tiene permisos de reiniciar y comprobar el estado de hmi_planta usando privilegios de root, pero no dispone de permisos generales de administración.
+
+**Carlos:**
+
+<img width="900" height="202" alt="image" src="https://github.com/user-attachments/assets/84507327-25e7-4733-8466-61d4683c8279" />
+
+Carlos pertenece al grupo supervisores. Puede ejecutar el script de auditoría como root sin necesidad de introducir contraseña (NOPASSWD). No tiene permisos generales de administración.
+
+**Alberto:**
+
+<img width="565" height="62" alt="image" src="https://github.com/user-attachments/assets/324f8962-b9c4-4a69-953c-ef4530754ab3" />
+
+Alberto no pertenece a ninguno de lso grupos autorizados (ingenieria o supervisores). Por tanto, no tiene permisos para ejecutar comandos mediante *sudo*, tal y como confirma el mensaje del final.
+
+### 6. Conectado como alberto (operarios), intenta ejecutar algo con sudo y confirma que se le deniega:
+
 
 
 # Preguntas de reflexión
 
 ### 1- Una contraseña de 20 caracteres aleatorios es, en teoría, casi imposible de reventar por fuerza bruta. ¿Qué riesgo concreto cubre el MFA que una contraseña así, por fuerte que sea, no cubre?
-
+En el caso de que alguien consiga averiguar la contraseña, el MFA evita que pueda entrar porque también necesitaría el código de Google Authenticator.
 
 ### 2- Buscad brevemente la postura actual del NIST sobre la caducidad obligatoria de contraseñas. ¿Por qué forzar el cambio cada pocos días puede llegar a ser contraproducente para la seguridad real?
-
+El NIST recomienda no obligar a cambiar las contraseñas cada X tiempo. Forzar el cambio cada poco tiempo puede hacer que la seguridad sea inferior porque suelen poner la misma contraseña añadiendo un número al final o incluso ponerla en un post-it en el pc.
 
 ### 3- Aunque sudo esté perfectamente configurado, seguís necesitando las ACL de la sesión anterior. Explicad con un ejemplo por qué una capa no sustituye a la otra
+Las ACL sirven para controlar quién puede acceder a los archivos y carpetas, mientras que sudo permite ejecutar determinados comandos como administrador. Por ejemplo, aunque Nestor tenga permiso de reiniciar el servicio hmi_planta mediante sudo, si no tiene permisos ACL para acceder a un archivo, no podrá leerlo ni modificarlo. Por eso una cosa no sustituye a la otra, sino que ambas se complementan.
 
 ### 4- Un alumno pierde el móvil con Google Authenticator y no guardó los scratch codes. ¿Qué tendría que hacer el administrador del sistema para devolverle el acceso sin comprometer la seguridad del resto de cuentas?
 
