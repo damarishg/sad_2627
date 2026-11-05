@@ -264,7 +264,24 @@ Carlos pertenece al grupo supervisores. Puede ejecutar el script de auditoría c
 Alberto no pertenece a ninguno de lso grupos autorizados (ingenieria o supervisores). Por tanto, no tiene permisos para ejecutar comandos mediante *sudo*, tal y como confirma el mensaje del final.
 
 ### 6. Conectado como alberto (operarios), intenta ejecutar algo con sudo y confirma que se le deniega:
+```
+📌 $ sudo systemctl restart hmi_planta-sh
+```
 
+<img width="640" height="102" alt="image" src="https://github.com/user-attachments/assets/0bbeae55-6245-46ea-bdc7-95ee215552aa" />
+
+### 7. Busca ese intento en el registro del sistema:
+```
+📌 $ sudo tail -n 20 /var/log/auth.log
+```
+
+<img width="1786" height="96" alt="image" src="https://github.com/user-attachments/assets/1f86def5-2a83-494b-9dcd-60836847a39a" />
+
+### 8. Conectado como carlos (supervisores), ejecuta sudo /usr/local/bin/auditoria_planta.sh y comprueba que no pide contraseña.
+```
+📌 $ sudo /usr/local/bin/auditoria_planta.sh 
+```
+<img width="741" height="55" alt="image" src="https://github.com/user-attachments/assets/dd444876-8a2d-46fa-9c11-95930f21684e" />
 
 
 # Preguntas de reflexión
@@ -280,4 +297,4 @@ Las ACL sirven para controlar quién puede acceder a los archivos y carpetas, mi
 
 ### 4- Un alumno pierde el móvil con Google Authenticator y no guardó los scratch codes. ¿Qué tendría que hacer el administrador del sistema para devolverle el acceso sin comprometer la seguridad del resto de cuentas?
 
-
+El administrador tendría que desactivar temporalmente el Google Authenticator de ese usuario, después comprobar su identidad y ayudarle a configurarlo de nuevo en el nuevo móvil. Una vez configurado, volvería a activar el doble factor y comprobaría que funciona correctamente.
