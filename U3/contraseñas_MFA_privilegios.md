@@ -14,6 +14,10 @@ separado.
 
 <img width="583" height="52" alt="image" src="https://github.com/user-attachments/assets/cdb9eab8-c72c-4e0e-a9fd-275f70543eec" />
 
+Se activa comprobando que esta línea existe en /etc/pam.d/common-password, justo antes de la línea depam_unix.so (en Debian/Ubuntu suele instalarse ya activada; si no, añádela):
+```
+📌 password requisite pam_pwquality.so retry=3
+```
 
 ## 1.3 Práctica guiada — aplicar la política
 
