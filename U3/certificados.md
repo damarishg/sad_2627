@@ -146,5 +146,203 @@ Este es el momento clave: la CA comprueba la petición y la firma con su clave p
 <img width="582" height="137" alt="image" src="https://github.com/user-attachments/assets/fc8e7f2a-8ae0-40cb-84d6-20c61f4897ed" />
 
 
+¿Por qué el certificado del servidor dura 365 días y el de la CA 10 años?
+
+Porque el CA lo he creado para que tenga una vigencia de 3650 días (10 años) ya que es el certificado principal que usaré para firmar otros certificados, mientras que el certificado del servidor le he puesto 365 días (1 año) y es aconsejable renovarlo con más frecuencia por seguridad.
+
+**Paso 8 — Verificar la cadena de confianza**
+```
+📌 $ openssl verify -CAfile certs/ca.crt certs/srv.crt
+```
+
+<img width="775" height="55" alt="image" src="https://github.com/user-attachments/assets/11a04071-0d86-4aac-9114-517c5b2ac596" />
+
+```
+📌 $ openssl x509 -in certs/srv.crt -noout -subject -issuer -ext subjectAltName
+```
+
+<img width="825" height="147" alt="image" src="https://github.com/user-attachments/assets/51c1b783-22e0-4fea-8afc-67259a020615" />
+
+**Paso 9 — Instalar el certificado en Apache**
+Copiamos el certificado y la clave a los directorios estándar del sistema y activamos el módulo SSL de Apache. La clave solo debe poder leerla root (Apache la lee al arrancar, antes de cambiar de  usuario).
+
+* **Paso 1:** Copiar el  certificado a su directorio
+ ```
+📌 $ sudo cp ~/ca/certs/srv.crt /etc/ssl/certs/torrent-srv.crt
+ ```
+
+<img width="831" height="55" alt="image" src="https://github.com/user-attachments/assets/fe095155-3f33-4a1a-be93-68f11f1d2b6e" />
+
+* **Paso 2:** Copiar la clave privada
+```
+📌  sudo cp ~/ca/private/srv.key /etc/ssl/private/torrent-srv.key
+```
+
+<img width="875" height="41" alt="image" src="https://github.com/user-attachments/assets/59e23f27-537d-4fb6-a302-e6e66064a277" />
+
+* **Paso 3:** Proteger la clave privada
+```
+📌 $ sudo chmod 600 /etc/ssl/private/torrent-srv.key
+```
+
+<img width="737" height="51" alt="image" src="https://github.com/user-attachments/assets/cc16e13e-33a6-4ab3-9679-5fe182116c6c" />
+
+* **Paso 4:** Activar el módulo SSL de Apache
+```
+📌 $ sudo a2enmod ssl
+```
+
+<img width="411" height="45" alt="image" src="https://github.com/user-attachments/assets/96810343-0b57-4386-91aa-04c51a723d56" />
+
+<img width="565" height="40" alt="image" src="https://github.com/user-attachments/assets/c4662666-47d5-4e6f-bec8-4a9c3c4eeac9" />
+
+* **Paso 5:** Modificar la configuración SSL de Apache
+```
+📌 $ sudo nano /etc/apache2/sites-available/default-ssl.conf
+```
+Antes de configurar:
+
+<img width="653" height="80" alt="image" src="https://github.com/user-attachments/assets/b4e9cd3e-ca31-48e3-93c2-5d04e8f89b51" />
+
+Después de configurar:
+
+<img width="591" height="77" alt="image" src="https://github.com/user-attachments/assets/b3670916-4d0d-40c1-a414-762861cad28f" />
+
+* **Paso 6:** Activar el sitio HTTPS
+```
+📌 $ sudo a2ensite default-ssl
+```
+
+<img width="505" height="42" alt="image" src="https://github.com/user-attachments/assets/431eaa37-48fd-49d3-846f-530e28378f48" />
+
+* **Paso 7:** Comprobar la configuración
+```
+📌 $ sudo apache2ctl configtest
+```
+
+<img width="587" height="121" alt="image" src="https://github.com/user-attachments/assets/ae31b9ff-cd58-4993-b72a-b4c139307783" />
+
+* **Paso 8:** Reiniciar Apache
+```
+📌 $ sudo systemctl restart apache2
+```
+
+<img width="581" height="42" alt="image" src="https://github.com/user-attachments/assets/0c644276-0dfd-4e74-a506-00615df65505" />
+
+* **Paso 9:** Comprobar que Apache escucha por el puerto 443
+```
+📌 $ sudo ss -tlnp | grep ':443'
+```
+
+<img width="880" height="93" alt="image" src="https://github.com/user-attachments/assets/3af307ca-c68c-4075-b41f-f3f58de2f2f0" />
+
+**Paso 10 — Probar HTTPS desde la propia VM, antes de confiar en la CA**
+
+* **1:** Probar HTTPS sin confiar todavía en la CA
+```
+📌 $ curl -I https://192.168.56.2(IP_SERVIDOR)
+```
+
+<img width="811" height="182" alt="image" src="https://github.com/user-attachments/assets/6e0c21b9-1081-4f7d-82a3-9a94d9000e38" />
+
+* **2:** Probar confiando en la CA
+```
+📌 $ curl -I --cacert ~/ca/certs/ca.crt https://192.168.56.2(IP_SERVIDOR)
+```
+
+<img width="821" height="55" alt="image" src="https://github.com/user-attachments/assets/78e87d99-51ab-474b-a181-a30c606ca905" />
+
+Explica con tus palabras por qué el primero falla y el segundo funciona.
+
+En el primer intento falla porque Ubuntu no confía en la CA ya que su certificado es autofirmado y todavía no está instalada entre las autoridades de confianza. En el segundo funciona porque le he indicado expresamente a *curl* que confíe en la CA mediante la opción *--cacert*.
+
+**Paso 11 — El navegador: advertencia, huella e importación de la CA**
+* **1:** Advertencia de seguridad inicial en Firefox por certificado no confiable
+
+<img width="892" height="701" alt="image" src="https://github.com/user-attachments/assets/fc205e2f-d726-4956-8062-74032d0e6405" />
+
+<img width="363" height="80" alt="image" src="https://github.com/user-attachments/assets/610d333f-f26a-4707-afbf-1870d631eb10" />
+
+* **2:** Publicar el certificado de la CA
+```
+📌 $ sudo cp ~/ca/certs/ca.crt /var/www/html/torrent-ca.crt
+```
+
+<img width="808" height="43" alt="image" src="https://github.com/user-attachments/assets/809b80fc-6162-445b-9195-7e6928f17b27" />
+
+
+* **3:** Calcular la huella digital de la CA
+```
+📌 $ openssl x509 -in ~/ca/certs/ca.crt -noout -fingerprint -sha256
+```
+
+<img width="891" height="70" alt="image" src="https://github.com/user-attachments/assets/7a513bd7-6850-4339-ac9a-af2fc5f4f223" />
+
+* **4:** Abrir el certificado en Firefox
+
+Certificado descargado:
+
+<img width="447" height="167" alt="image" src="https://github.com/user-attachments/assets/5bda1a5b-e82b-48d7-bbd2-5fa56565fd80" />
+
+Para instalarlo hay que ir a Ajustes - Privacidad y Seguridad- Certificados- Ver Certificados - Autoridades - Importar - Confiar en esta CA para identificar sitios web
+
+<img width="860" height="266" alt="image" src="https://github.com/user-attachments/assets/c193ffaf-d330-49e5-b562-d234c67635c9" />
+
+<img width="685" height="223" alt="image" src="https://github.com/user-attachments/assets/44adce04-1a74-49c5-af30-2315e2e6e088" />
+
+* **5:** Comprobación
+
+<img width="641" height="275" alt="image" src="https://github.com/user-attachments/assets/c4368e90-695a-457f-8942-b095df0507cd" />
+
+<img width="277" height="106" alt="image" src="https://github.com/user-attachments/assets/5d4be3ce-279a-404c-ad30-f5146e392e92" />
+
+**Paso 12 — Mirar la conexión TLS por dentro**
+```
+📌 $ openssl s_client -connect 192.168.56.2:443 -CAfile ~/ca/certs/ca.crt </dev/null 2>/dev/null | grep -E 's:|i:|Verify return code|Cipher'
+```
+
+<img width="872" height="150" alt="image" src="https://github.com/user-attachments/assets/52e0398d-5f8d-4dc9-96f1-323141a27fec" />
+
+* **Versión del TLS:** TLS 1.3
+* **Cifrado negociado:** TLS_AES_256GCM_SHA384
+
+**Prueba sin -CAfile**
+```
+📌 $ openssl s_client -connect 192.168.56.2:443 </dev/null 2>/dev/null | grep -E 's:|i:|Verify return code|Cipher'
+```
+
+<img width="893" height="235" alt="image" src="https://github.com/user-attachments/assets/d7e80fd7-1b24-4b7d-b21e-a3be29e446c2" />
+
+Al quitar la opción -CAfile, OpenSSL devuelve el código 21, porque no dispone del certificado de la autoridad certificadora (AC) para verificar la cadena de confianza.
+
+**Paso 13 — Guardar lo hecho para la Fase 2**
+```
+📌 $ tar czf ~/ca-torrent-backup.tar.gz -C ~ ca
+```
+
+<img width="712" height="47" alt="image" src="https://github.com/user-attachments/assets/a94a87d6-86ae-4798-a1b9-24fa8a2b264e" />
+
+## 1.3 Preguntas de la Parte 1
+**1. Explica con tus palabras la diferencia entre ca.key, ca.crt, srv.key y srv.crt: ¿cuáles son secretos y cuáles públicos?**
+
+* **ca.key:** Es la clave privada de la autoridad certificadora (CA). Se usa para firmar certificados. Es secreta y NUNCA debe compartirse.
+* **ca.crt:** 
+
+**2. Alguien roba ca.key (sin contraseña). ¿Qué puede hacer con ella? ¿Qué tendría que hacer Torrent S.L. para recuperar la confianza?**
+
+
+**3. ¿Por qué descargar ca.crt por HTTP y no verificar la huella es un riesgo? ¿Quién podría aprovecharlo?**
+
+
+**4. ¿Es una buena idea que la CA y el servidor web estén en la misma máquina? ¿Qué problema de seguridad crea?**
+
+
+
+
+
+
+
+
+
 
 
