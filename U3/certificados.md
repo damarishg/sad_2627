@@ -326,15 +326,37 @@ Al quitar la opción -CAfile, OpenSSL devuelve el código 21, porque no dispone 
 **1. Explica con tus palabras la diferencia entre ca.key, ca.crt, srv.key y srv.crt: ¿cuáles son secretos y cuáles públicos?**
 
 * **ca.key:** Es la clave privada de la autoridad certificadora (CA). Se usa para firmar certificados. Es secreta y NUNCA debe compartirse.
-* **ca.crt:** 
+* **ca.crt:** Es el certificado público de la autoridad certificadora (CA). Sirve para que otros equipos puedan confiar en los certificados que firma. No es secreta.
+* **srv.key:** Es la clave privada del servidor Apache. Se usa para demostrar su identidad durante las conexiones HTTPS.c Es secreta y debe protegerse.
+* **srv.crt:** Es el certificado público del servidor. Identifica al servidor y contiene su clave pública. No es secreto.
 
 **2. Alguien roba ca.key (sin contraseña). ¿Qué puede hacer con ella? ¿Qué tendría que hacer Torrent S.L. para recuperar la confianza?**
 
+Puede usarla para firmar certificados falsos haciéndose pasar por la autoridad certificadora (CA) de Torrent S.L. Esto permitiría crear certificados fraudulentos que podrían ser aceptados como legítimos. 
+
+Para recuperar la confianza, Torrent S.L tendría que revocar la CA comprometida, crear una nueva CA con una nueva clave privada, generar y distribuir un nuevo certificado público de la CA, volver a emitir los certificados de los servidores con la nueva CA e instalar el nuevo certificado de confianza en todos los equipos clientes.
 
 **3. ¿Por qué descargar ca.crt por HTTP y no verificar la huella es un riesgo? ¿Quién podría aprovecharlo?**
 
+Descargar *ca.crt* por HTTP sin verificar su huella es peligroso porque un atacante podría interceptar la descarga y sustituir el certificado original por uno falso.
+
+Podría aprovecharlo un atacante que realice un ataca Man-in-the-Middle para conseguir que los usuarios confíen en una CA falsa.
 
 **4. ¿Es una buena idea que la CA y el servidor web estén en la misma máquina? ¿Qué problema de seguridad crea?**
+
+No es recomendable, porque si un atacante consigue acceder al servidor web, también podrían robar la clave privada de la CA (ca.key). Esto le permitiría crear certificados falsos y comprometer la confianza de toda la organización. Lo ideal es mantener la CA en una máquina separada.
+
+
+#  PARTE 2 Un certificado real y gratuito con Let’s Encrypt
+## 2.2 Paso a paso
+
+
+
+
+
+
+
+
 
 
 
