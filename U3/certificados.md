@@ -350,18 +350,62 @@ No es recomendable, porque si un atacante consigue acceder al servidor web, tamb
 #  PARTE 2 Un certificado real y gratuito con Let’s Encrypt
 ## 2.2 Paso a paso
 
+**Paso 1 — Crear tu subdominio en DuckDNS**
+
+<img width="767" height="143" alt="image" src="https://github.com/user-attachments/assets/0ba34a23-35a7-4af7-9292-d5b3ae7a0125" />
+
+<img width="522" height="152" alt="image" src="https://github.com/user-attachments/assets/e991db99-6bd9-464b-b398-127806363009" />
+
+<img width="617" height="70" alt="image" src="https://github.com/user-attachments/assets/ebb52f38-0ec9-4f05-aaf3-4f7b26ff3eed" />
+
+**Paso 2 — Instalar acme.sh (leyendo antes lo que se va a ejecutar)**
+**Paso 1:** Iniciar sesión como root
+```
+📌 $ sudo -i
+```
+
+<img width="361" height="42" alt="image" src="https://github.com/user-attachments/assets/ea57b448-8e73-4fc0-a39f-d70a54ba0e94" />
+
+**Paso 2:** Descargar el script de instalación sin ejecutarlo
+```
+📌 # curl -o get-acme.sh https://get.acme.sh
+```
+
+<img width="818" height="116" alt="image" src="https://github.com/user-attachments/assets/6dbb4028-bd5e-4f11-ba1d-0b22566f409f" />
+
+**Paso 3:** Abrir y leer el contenido de get-acme.sh
+```
+📌 less get-acme.sh
+```
+
+```
+📌 sh get-acme.sh email=damaris@gmail.com
+```
+
+<img width="630" height="75" alt="image" src="https://github.com/user-attachments/assets/2f24774d-3053-41bc-b15e-351e92bd169a" />
+
+<img width="531" height="75" alt="image" src="https://github.com/user-attachments/assets/3dfd1ebd-ab99-49fa-a319-0027572dfa84" />
 
 
+El script get-acme.sh instala acme.sh, una herramienta que usa el protocolo ACME para comunicarse con autoridades certificadoras como Let's Encrypte. Esta herramienta permite solicitar, instalar y renovar automáticamente certificados SSl/TLS para habilitar conexiones HTTPS en el servidor Apache.
+
+**Paso 3 — Elegir Let’s Encrypt como autoridad**
+```
+📌 # ~/.acme.sh/acme.sh --set-default-ca --server letsencrypt
+```
+
+<img width="806" height="65" alt="image" src="https://github.com/user-attachments/assets/a88853a1-d04b-40d9-b5d1-93afa8cb6151" />
 
 
+**Paso 4 — Pedir el certificado (desafío DNS-01)**
+```
+📌 # export DuckDNS_Token="PEGA_AQUI_TU_TOKEN"
+```
 
 
-
-
-
-
-
-
+```
+📌 # ~/.acme.sh/acme.sh --issue --dns dns_duckdns -d NOMBRE.duckdns.org
+```
 
 
 
