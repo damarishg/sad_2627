@@ -394,20 +394,26 @@ El script get-acme.sh instala acme.sh, una herramienta que usa el protocolo ACME
 📌 # ~/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 ```
 
-<img width="806" height="65" alt="image" src="https://github.com/user-attachments/assets/a88853a1-d04b-40d9-b5d1-93afa8cb6151" />
+<img width="897" height="77" alt="image" src="https://github.com/user-attachments/assets/c9bbfb77-80b8-446c-88b4-645a6795cec4" />
 
+
+Este comando configura Let's Encrypt como autoridad certificadora (CA) predeterminada de acme.sh, para que sea la entidad encargada de emitir los certificados digitales SSL/TLS para HTTPS-
 
 **Paso 4 — Pedir el certificado (desafío DNS-01)**
+
+* **1:** Guardar el token de DuckDNS
 ```
 📌 # export DuckDNS_Token="PEGA_AQUI_TU_TOKEN"
 ```
 
-
+* **2:** Solicitar el certificado a Let's Encrypte usando DuckDNS
 ```
 📌 # ~/.acme.sh/acme.sh --issue --dns dns_duckdns -d NOMBRE.duckdns.org
 ```
 
+<img width="890" height="65" alt="image" src="https://github.com/user-attachments/assets/6f1dfc5e-3d22-436c-9763-e50d886d837c" />
 
+<img width="706" height="142" alt="image" src="https://github.com/user-attachments/assets/727553fd-a638-4c21-9ca4-c5661b32aba7" />
 
 
 
