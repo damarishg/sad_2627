@@ -416,5 +416,88 @@ Este comando configura Let's Encrypt como autoridad certificadora (CA) predeterm
 <img width="706" height="142" alt="image" src="https://github.com/user-attachments/assets/727553fd-a638-4c21-9ca4-c5661b32aba7" />
 
 
+* **DuckDNS:** Proporciona el dominio y permite modificar sus registros DNS.
+* **Token:** Contraseña de acceso a la API de DuckDNC.
+* **acme.sh:** Herramienta que automatiza la solicitud del certificado.
+* **DNS-01:** Método que verifica la propiedad del dominio mediante un registro TXT.
+* **Let's Encrypt:** Autoridad que emite el certificado SSL/TLS.
 
+**Paso 5 — Instalar el certificado donde Apache pueda usarlo**
+```
+📌 # mkdir -p /etc/ssl/torrent-le
+📌 # ~/.acme.sh/acme.sh --install-cert -d damarishg.duckdns.org --key-file /etc/ssl/torrent-le/privkey.pem --fullchain-file /etc/ssl/torrent-le/fullchain.pem --reloadcmd "systemctl reload apache2"
+📌 # chmod 600 /etc/ssl/torrent-le/privkey.pem
+```
 
+<img width="900" height="117" alt="image" src="https://github.com/user-attachments/assets/af64270b-0312-4a5a-a641-216472a944f6" />
+
+<img width="637" height="36" alt="image" src="https://github.com/user-attachments/assets/bbbb4a4c-a33e-40c2-a9e4-ec706b0e5e3e" />
+
+* **privkey.pen:** Contiene la clave privada del servidor. Es secreta y NO debes compartirla.
+* **fullchain.pem:** Contiene el certificado del dominio y los certificados intermedios necesarios para verificar la cadena de confianza.
+
+**⚠️ .key indica que el archivo contiene una clave, mientras que .pem indica el formato en el que se guarda la información. Un archivo .pem también puede contener una clave privada.**
+
+**Paso 6 — Cambiar Apache al certificado de Let’s Encrypt**
+Hacemos una copia del fichero para poder volver al certificado de la CA de Torrent S.L. y cambiamos las dos rutas.
+```
+📌 # cp /etc/apache2/sites-available/default-ssl.conf /root/default-ssl.conf.ca-propia
+📌 # nano /etc/apache2/sites-available/default-ssl.conf
+```
+
+<img width="905" height="78" alt="image" src="https://github.com/user-attachments/assets/ad21f49a-e5fd-4a79-9192-ec18424875bb" />
+
+Hay que modificar las rutas SSLCertificateFile y SSLCertificateKeyFile del archivo anterior para que Apache use el nuevo certificado de Let's Encrypt en lugar del certificado de mi CA porpia. De esta manera, Apache usará el certificado público de Let's Encrypte y su clave privada correspondiente para establecer conexiones HTTPS seguras.
+
+<img width="660" height="80" alt="image" src="https://github.com/user-attachments/assets/b1bd8b38-55d8-4a3b-aac5-3a5f9d285a53" />
+
+Una vez cambiado el certificado y clave se comprueba que la sintaxis está bien y se reinicia Apache.
+
+<img width="447" height="96" alt="image" src="https://github.com/user-attachments/assets/fdbfb1e9-d69e-429f-b2de-581c6701ec0f" />
+
+<img width="526" height="37" alt="image" src="https://github.com/user-attachments/assets/bf1defec-80f9-4400-aeec-405b5c4a7f11" />
+
+**Paso 7 — Comprobar el resultado**
+Al haber cambiado la CA autofirmada por la de Let¡s Encrypte que es una autoridad certificadora pública (de confianza) reconocida por los sistemas y navegadores no es necesario poner -CAfile, ya que el equipo puede verificar el certificado usando las autoridades certificadores (CA) de confianza que tiene instaladas.
+
+Comprobación con curl:
+
+<img width="882" height="300" alt="image" src="https://github.com/user-attachments/assets/be18e91b-ab4a-4683-9ee9-9bd407ae31af" />
+
+Comprobación desde el navegador:
+
+<img width="635" height="257" alt="image" src="https://github.com/user-attachments/assets/5568bffd-ea94-46b4-93a8-414617547fd7" />
+
+**Paso 8 — Mirar la cadena y la lista de CA de confianza**
+Con s_client vemos qué envía el servidor. Fíjate en que ahora hay dos certificados en la cadena: el tuyo y el de una entidad intermedia. La raíz no se envía porque ya está en el sistema.
+```
+📌 # openssl s_client -connect damarishg.duckdns.org:443 -servername NOMBRE.duckdns.org </dev/null 2>/dev/null | grep -E ' s:| i:|Verify return code'
+```
+
+<img width="907" height="243" alt="image" src="https://github.com/user-attachments/assets/c344b111-0d4d-4eeb-9cea-d419b4b0d32b" />
+
+```
+📌 # ls /etc/ssl/certs | grep -i isrg
+```
+
+<img width="570" height="85" alt="image" src="https://github.com/user-attachments/assets/81fc8a33-7c56-459d-a969-de0f1ac260a9" />
+
+La CA de Torrent S.L sí existe, ya que está creada, pero no aparece en /etc/ssl/certs porque no está instalada como autoridad certificadora (CA) de confianza en el sistema. Tener una CA creada no significa que el sistema confíe automáticamente en ella.
+
+La lista de autoridades certificadores (CA) de confianza está gestionada por Ubuntu mediante el paquete *ca-certificates*. Los certificados llegan al PC a través de las actualizaciones del sistema o cuando un administrador los instala manualmente. Se almacenan en */etc/ssl/certs*.
+
+* **default-ssl.conf:** Es un archivo de configuración de Apache. Le indica qué certificado y qué clave privada debe usar para proteger las conexiones HTTPS de la página web.
+* **/etc/ssl/certs/:** Es una carpeta donde Ubuntu guarda los certificados de las autoridades certificadoras en las que confían para verificar certificados de otros servidores.
+
+**Paso 9 — La renovación automática**
+Los certificados de Let’s Encrypt duran 90 días. acme.sh programó en cron una tarea diaria que renueva el certificado cuando se acerca la fecha y recarga Apache con el comando que guardamos en el Paso 5.
+```
+📌 # crontab -l | grep acme
+📌 # ~/.acme.sh/acme.sh --list
+```
+
+<img width="1225" height="147" alt="image" src="https://github.com/user-attachments/assets/d1d29f12-fdd6-4be3-8a01-5399eebbe89e" />
+
+Cuándo caduca tu certificado y cuándo intentará renovarse.
+
+El certificado de damarishg.duckdns.org caduca el 08/01/2027 y acme.sh tiene programada su renovación automática para esa misma fecha
