@@ -500,4 +500,55 @@ Los certificados de Let’s Encrypt duran 90 días. acme.sh programó en cron un
 
 Cuándo caduca tu certificado y cuándo intentará renovarse.
 
-El certificado de damarishg.duckdns.org caduca el 08/01/2027 y acme.sh tiene programada su renovación automática para esa misma fecha
+El certificado de damarishg.duckdns.org caduca el 08/01/2027 y acme.sh tiene programada su renovación automática para esa misma fecha.
+
+# 2.3 Comparamos las dos situaciones
+
+|                           | CA propia de Torrent S.L. | Let’s Encrypt |
+|---------------------------|---------------------------|---------------|
+| ¿Quién firma el certificado? | LA CA propia de Torrent S.L | Let's Encrypt |
+| ¿El navegador lo acepta sin hacer nada? | No | Sí |
+| ¿Qué tuviste que hacer para que confiara? | Instalar el certificado manualmente en el navegador | Nada, ya que es un CA público |
+| Validez del certificado del servidor | 10 años |  90 días |
+| Coste y esfuerzo de renovarlo | Gratuito, hay que gestionar la renovación manualmente  | Gratis, acme.sh automatiza la renovación mediante una tarea cron |
+⚠️| ¿Qué se comprueba antes de firmar? | El administrador decide qué certificados firmar | Que el solicitante controla el dominio |
+| ¿Valdría para un servidor sin Internet? | Sí, puede funcionar en una red local | Si ya lo tienes instalado sí (hasta que caduque), sino no sirve porque para solicitarlo y renovarlo necesitas Internet |
+
+# 3. Preguntas finales
+## 1. ¿Por qué el navegador confía en Let’s Encrypt y no en la CA de Torrent S.L.? ¿Quién decide en qué entidades confía un navegador?
+
+Let's Encrypte es un CA pública mientras que la CA es una CA propia de Torrent S.L, no es pública. Ubuntu es quien decide en que entidades confía el sistema mediante ca-certificates, si el certificado está dentro de /ets/ssl/certs confiará. También puedes instalar el certificado manualmente en el navegador para que él confíe aunque no esté dentro de /ets/ssl/certs/.
+
+## 2. ¿Por qué los certificados de Let’s Encrypt duran solo 90 días? Piensa en qué pasa si alguien roba la clave privada del servidor.
+
+Dura solo 90 días, por seguridad. En caso de que roben la clave privada del servidor pueden suplantarlo . Al tener una validez determinada se limita el tiempo del uso que le pueden dar en el caso de que no se hayan enterado de que le han robado la clave o no se revoque a tiempo.
+
+## 3. La página interna de la planta de Torrent S.L. no tiene salida a Internet. ¿Qué CA usarías, la propia o Let’s Encrypt? ¿Y para la web pública de un cliente?
+
+Para la página interna usaría la CA propia de Torrent S.L, ya que permite emitir y renovar certificados dentro de la red local sin necesidad de tener Internet, aunque los equipos que accedan tendrán que confiar en la CA.
+
+Para la web pública de un cliente usaría Let's Encrypte, porque es una CA pública reconocida por los navegadores y no es necesario instalar manualmente su certificado en los equipos de los visitantes.
+
+## 4. HTTPS protege la confidencialidad y la integridad de lo que viaja. Pon dos ejemplos de ataques que HTTPS no impide.
+
+* **Phishing:** Un atacante que crea una web falsa que imita a la original para robar credenciales puede usar HTTPS.
+* **Ataque DDOS:** Un atacante puede saturar el servidor con multitud de peticiones para impedir que los usuarios puedan acceder.
+
+## 5. Una empresa de 3 personas, ¿montaría una CA propia? ¿Cuándo sí tiene sentido? Relaciónalo con lo que haremos en la Fase 2 (VPN).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
