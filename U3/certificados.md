@@ -511,7 +511,7 @@ El certificado de damarishg.duckdns.org caduca el 08/01/2027 y acme.sh tiene pro
 | ¿Qué tuviste que hacer para que confiara? | Instalar el certificado manualmente en el navegador | Nada, ya que es un CA público |
 | Validez del certificado del servidor | 10 años |  90 días |
 | Coste y esfuerzo de renovarlo | Gratuito, hay que gestionar la renovación manualmente  | Gratis, acme.sh automatiza la renovación mediante una tarea cron |
-⚠️| ¿Qué se comprueba antes de firmar? | El administrador decide qué certificados firmar | Que el solicitante controla el dominio |
+| ¿Qué se comprueba antes de firmar? | El administrador decide qué certificados firmar | Que el solicitante controla el dominio |
 | ¿Valdría para un servidor sin Internet? | Sí, puede funcionar en una red local | Si ya lo tienes instalado sí (hasta que caduque), sino no sirve porque para solicitarlo y renovarlo necesitas Internet |
 
 # 3. Preguntas finales
@@ -536,6 +536,7 @@ Para la web pública de un cliente usaría Let's Encrypte, porque es una CA púb
 
 ## 5. Una empresa de 3 personas, ¿montaría una CA propia? ¿Cuándo sí tiene sentido? Relaciónalo con lo que haremos en la Fase 2 (VPN).
 
+Para una empresa de 3 personas no resultaría muy útil tener una CA propia, ya que requiere trabajo y responsabilidad gestionar certificados, claves privadas, renovaciones y revocaciones. Una CA propia tiene sentido cuando una empresa necesita gestionar certificados para sus servicios internos, servidores, trabajadores o conexiones VPN, facilitando la autenticación y seguridad dentro de la organización.
 
 
 
