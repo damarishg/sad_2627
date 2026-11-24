@@ -3,14 +3,14 @@
 | Servicio | Zona | Justificación (una frase)|
 |----------|------|--------------------------|
 | Web corporativa pública | DMZ | Tiene que estar disponible fuera de la LAN |
-| Servidor de correo | LAN | No pueden acceder a él desde Internet |
+| Servidor de correo | DMZ | Tiene que estar disponible desde Internet |
 | Pasarela VPN | DMZ | Está expuesta a Internet pero está aislada de la LAN | 
-|Proxy (saliente e inverso) | DMZ | Es el intermediario entre Internet y DMZ y entre DMZ y LAN |
+| Proxy (saliente e inverso) | DMZ | Es el intermediario entre Internet y DMZ y entre DMZ y LAN |
 | HMI de planta y carpeta de planos | Zona Crítica | Son archivos/documentos restringidos |
 | Autoridad de certificación (srv-ca) | Zona Crítica | Solo tienen acceso a él personas autorizadas |
 | Servidor de copias de seguridad | Zona crítica | Solo tienen acceso a él personas autorizadas |
 | Portátiles de ingenieros y operarios | LAN | Son equipos confiables |
-| Wi-Fi de invitados | DMZ | Está expuesto a Internet pero está aislado de la LAN |
+| Wi-Fi de invitados | Zona Propia (LAN 2) | Está expuesto a Internet pero está aislado de la LAN |
 | Servidor de registros y monitorización | Zona Crítica | Solo tienen acceso a él personas autorizadas |
 
 # 2. Tabla de flujos
