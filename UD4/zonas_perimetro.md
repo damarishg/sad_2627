@@ -28,5 +28,5 @@
 <img width="591" height="142" alt="image" src="https://github.com/user-attachments/assets/4fc74a19-2a8b-4325-8f89-b33bc685c5da" />
 
 # 4. Pregunta de reflexión
-## si cae el servidor web, ¿qué puede hacer el atacante en tu diseño y qué se lo impide?
-
+## Si cae el servidor web, ¿qué puede hacer el atacante en tu diseño y qué se lo impide?
+Si el servidor web está caído el atacante no puede acceder a un servicio que no está operativo, además, los cortafuegos siguen activos. E 1º bloquea el tráfico no autorizado desde Internet hacia la DMZ y el 2º impide avanzar desde la DMZ hacia la LAN interna.
